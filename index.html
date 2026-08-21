@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Кухня, прихожая, гостиная — бриф отделки</title>
+  <style>
+    :root {
+      --ink: #2c241c;
+      --muted: #6a5c4a;
+      --paper: #f7f1e8;
+      --card: #fffdf8;
+      --line: #d9cfc0;
+      --accent: #8b5e3c;
+      --ok: #2f6b4f;
+      --warn: #8b2a2a;
+      --oak: #c4a06a;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font: 16px/1.5 "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
+      color: var(--ink);
+      background: var(--paper);
+    }
+    header {
+      background: #1c1814;
+      color: #f3e6d0;
+      padding: 28px 8vw 22px;
+    }
+    header p { margin: 8px 0 0; color: #c4b49a; font-size: 15px; }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      margin-top: 16px;
+      font-family: "DejaVu Sans", "Noto Sans", Arial, sans-serif;
+      font-size: 13px;
+    }
+    nav a { color: #e8d5b5; text-decoration: none; border-bottom: 1px solid #8b5e3c; }
+    main { max-width: 1100px; margin: 0 auto; padding: 28px 8vw 80px; }
+    h1, h2, h3 { font-family: "DejaVu Sans", "Noto Sans", Arial, sans-serif; font-weight: 700; letter-spacing: -0.02em; }
+    h1 { font-size: 1.6rem; margin: 0; }
+    h2 { font-size: 1.35rem; margin: 2.2rem 0 0.7rem; border-bottom: 2px solid var(--oak); padding-bottom: 6px; }
+    h3 { font-size: 1.05rem; margin: 1.4rem 0 0.5rem; }
+    .lead { font-size: 1.12rem; max-width: 68ch; }
+    .verdict {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--ok);
+      padding: 16px 20px;
+      margin: 1.2rem 0;
+    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 1rem 0; }
+    figure { margin: 0; }
+    figure img { width: 100%; height: auto; display: block; border: 1px solid var(--line); background: #fff; }
+    figcaption {
+      font-family: "DejaVu Sans", "Noto Sans", Arial, sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: "DejaVu Sans", "Noto Sans", Arial, sans-serif;
+      font-size: 14px;
+      background: var(--card);
+    }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; vertical-align: top; text-align: left; }
+    th { background: #efe6d6; }
+    .no { color: var(--warn); }
+    .ok { color: var(--ok); font-weight: 700; }
+    ul.tight li { margin: 0.25rem 0; }
+    .plan { margin: 1rem 0; background: var(--card); border: 1px solid var(--line); padding: 8px; }
+    .plan object, .plan img { width: 100%; min-height: 280px; }
+    footer { color: var(--muted); font-size: 13px; margin-top: 3rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Отделка после частичного ремонта</h1>
+    <p>Кухня, прихожая, гостиная. Гарнитур остаётся. Штукатурка спальни, детской и зала готова. Ванные вне этого брифа.</p>
+    <nav>
+      <a href="#verdict">Вердикт</a>
+      <a href="#kitchen">Кухня</a>
+      <a href="#hallway">Прихожая</a>
+      <a href="#living">Гостиная</a>
+      <a href="#budget">Смета</a>
+      <a href="#measure">Замеры</a>
+      <a href="DESIGN.md">Полный текст DESIGN.md</a>
+    </nav>
+  </header>
+  <main>
+    <section id="verdict">
+      <h2>Вердикт</h2>
+      <p class="lead">Три зоны — одна система. Стол уезжает из кухни в дальнюю часть гостиной. Прихожая перестаёт быть открытым складом курток. Кухня остаётся рабочей на 2–3 человека, с моющейся стеной чуть темнее фасадов.</p>
+      <div class="verdict">
+        <strong class="ok">Делать:</strong> винил-гриж на кухне, тонкие дубовые рейки в коридоре 1,4 м, обеденный стол у окна гостиной (вариант A).<br/>
+        <strong class="no">Не делать:</strong> ещё одни светлые льняные обои, австрийские сваги, стол в правом углу кухни, толстый брус 40 x 40 в прихожей, откидную 140 на всякий случай.
+      </div>
+      <div class="grid">
+        <figure>
+          <img src="design/renders/kitchen-concept.jpg" alt="Концепт кухни"/>
+          <figcaption>Кухня: гриж, римская, стол у окна</figcaption>
+        </figure>
+        <figure>
+          <img src="design/renders/hallway-concept.jpg" alt="Концепт прихожей"/>
+          <figcaption>Прихожая: рейки и закрытая банкетка</figcaption>
+        </figure>
+        <figure>
+          <img src="design/renders/living-dining-zone.jpg" alt="Гостиная со столовой зоной"/>
+          <figcaption>Гостиная A: стол в дальней зоне</figcaption>
+        </figure>
+        <figure>
+          <img src="design/renders/living-murphy-bed.jpg" alt="Гостиная с откидной кроватью"/>
+          <figcaption>Гостиная B: кровать только если гости часто</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="kitchen">
+      <h2>Кухня</h2>
+      <p>Кремовый шейкер, мойка, плита, духовка, холодильник и полуостров (стиральная + СВЧ) <strong>остаются</strong>. Меняем стены, окно и стол.</p>
+      <h3>Обои</h3>
+      <ul class="tight">
+        <li>Винил горячего тиснения на флизелине, <strong>2–3 волны</strong>, 1,06 м, без подгона.</li>
+        <li>Фактура штукатурка / микроцемент. Цвет — тёплый гриж, на тон темнее фасадов.</li>
+        <li>Где: Лемана ПРО (Erismann, Palitra, Ateliero) 1,2–4,5 тыс. руб./рулон; Обойкин / Европа 3,5–8,5 тыс. руб.</li>
+        <li class="no">Не брать: светлый лён, бумагу, одну волну, цветы, 3D-кирпич, живой микроцемент ради статуса.</li>
+      </ul>
+      <div class="grid">
+        <figure>
+          <img src="design/renders/wallpaper-greige.jpg" alt="Образец гриж рядом с фасадом"/>
+          <figcaption>Стена должна быть темнее шкафа</figcaption>
+        </figure>
+        <figure>
+          <img src="design/renders/kitchen-window-table.jpg" alt="Стол длинной стороной к окну"/>
+          <figcaption>120 x 70, длинная сторона параллельно окну</figcaption>
+        </figure>
+        <figure>
+          <img src="design/renders/material-board.jpg" alt="Доска материалов"/>
+          <figcaption>Палитра на три зоны</figcaption>
+        </figure>
+      </div>
+      <h3>Окно</h3>
+      <p>Сваги и круглый карниз — в мусор. Потолочная алюминиевая шина цвета потолка. Римская песок/лён в проём. Две кремовые панели до пола минус 1,5 см, без ламбрекена. Пошив 12–35 тыс. руб. вместе с карнизом.</p>
+      <h3>Стол</h3>
+      <p>Не в правый угол. Прямоугольник <strong>120 x 70</strong> длинной стороной вдоль окна (предпочтительно) или круг D100, если чистая ширина от 2,6 м. 2–3 стула каждый день, складные — в шкафу. Проход вдоль гарнитура от 0,90 м. Створку стиральной не перекрывать.</p>
+      <div class="plan">
+        <object data="design/plans/kitchen.svg" type="image/svg+xml">План кухни</object>
+      </div>
+    </section>
+
+    <section id="hallway">
+      <h2>Прихожая 2,6 x 1,4 м</h2>
+      <p>Узкий коридор. Рейки — тонкие, иначе не разойтись. Открытую вешалку снимаем.</p>
+      <ul class="tight">
+        <li>Сечение <strong>20 x 40 мм плашмя</strong> (20 мм к комнате) или 16 x 30. Вынос с подложкой до 25–30 мм.</li>
+        <li>Правая стена: дадо 1400 мм. Торец: рейки в высоту + крючки 1100 / 1650 мм.</li>
+        <li>Банкетка 900–1000 x 350–400 с ящиками. Пуховики — в купе, на крючках только недельный комплект.</li>
+        <li>Верх стен: тауп моющийся (Tikkurila / Dulux) или винил 3 волны темнее кухни.</li>
+      </ul>
+      <div class="grid">
+        <figure>
+          <img src="design/renders/hallway-slats-detail.jpg" alt="Деталь реек и двух рядов крючков"/>
+          <figcaption>Два яруса крючков, тонкая рейка</figcaption>
+        </figure>
+      </div>
+      <div class="plan">
+        <object data="design/plans/hallway.svg" type="image/svg+xml">План прихожей</object>
+      </div>
+    </section>
+
+    <section id="living">
+      <h2>Гостиная 7 x 3,5 м</h2>
+      <h3>A — стол у окна <span class="ok">рекомендую</span></h3>
+      <p>Дальняя зона ~2,2–2,5 м становится обеденной на 4–6. Стол 140–160 x 80–90, подвес на оси, ковёр только у дивана. Камин, ТВ и пианино не трогаем. Смета зоны 50–120 тыс. руб. Это закрывает и пустую гостиную, и тесную кухню.</p>
+      <div class="plan">
+        <object data="design/plans/living-option-a.svg" type="image/svg+xml">План гостиной A</object>
+      </div>
+      <h3>B — вертикальная откидная в нише</h3>
+      <p>Только если гости ночуют часто и пианино можно убрать. Открытая кровать ест <strong>2,0–2,2 м</strong> при ширине комнаты 3,5 м — диван и проход к окну блокируются. Стена должна быть каменной, не ГКЛ. Нишу мерить до заказа: 90 см шкаф около 1,10 м; 140 см около 1,55–1,65 м.</p>
+      <p>Цены: готовая 90 ~40–70 тыс., 140 ~70–150 тыс., фасад в цвет 150–280 тыс. + матрас. Fly-bed, цех кухонь. Hoff «подъёмная царга» — не то.</p>
+      <div class="grid">
+        <figure>
+          <img src="design/renders/living-murphy-open.jpg" alt="Кровать опущена"/>
+          <figcaption>Открытая кровать — отдельный режим комнаты</figcaption>
+        </figure>
+      </div>
+      <div class="plan">
+        <object data="design/plans/living-option-b.svg" type="image/svg+xml">План гостиной B</object>
+      </div>
+    </section>
+
+    <section id="budget">
+      <h2>Смета контура A (без кровати)</h2>
+      <table>
+        <thead><tr><th>Блок</th><th>Мин</th><th>База</th><th>Макс</th></tr></thead>
+        <tbody>
+          <tr><td>Кухня: обои и работа</td><td>20 000</td><td>35 000</td><td>55 000</td></tr>
+          <tr><td>Кухня: римская, шина, панели</td><td>12 000</td><td>22 000</td><td>35 000</td></tr>
+          <tr><td>Кухня: стол и стулья</td><td>22 000</td><td>40 000</td><td>60 000</td></tr>
+          <tr><td>Прихожая: рейки</td><td>30 000</td><td>50 000</td><td>70 000</td></tr>
+          <tr><td>Прихожая: верх стен, дорожка</td><td>8 000</td><td>14 000</td><td>22 000</td></tr>
+          <tr><td>Прихожая: банкетка, крючки</td><td>10 000</td><td>16 000</td><td>25 000</td></tr>
+          <tr><td>Гостиная A: стол, стулья, свет</td><td>50 000</td><td>85 000</td><td>130 000</td></tr>
+          <tr><td><strong>Итого</strong></td><td><strong>152 000</strong></td><td><strong>262 000</strong></td><td><strong>397 000</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Цены — розница РФ, август 2026, плюс-минус 20%. Ванные не включены. Список позиций — в <a href="DESIGN.md">DESIGN.md</a>, раздел 6.</p>
+    </section>
+
+    <section id="measure">
+      <h2>Когда будет план Paint</h2>
+      <ul class="tight">
+        <li>Кухня: 4,50 x 2,70 — это между стенами или уже без гарнитура 0,60?</li>
+        <li>Полуостров, сторона стиральной, петля холодильника, вынос батареи, ось люстры.</li>
+        <li>Прихожая: три ширины в свету, глубина купе, проёмы в комнаты, розетки на торце.</li>
+        <li>Гостиная: ниша окно-камин (ш x в x г), материал стены, пианино да/нет, диван.</li>
+      </ul>
+      <p>Пока цифры — гипотеза по фото. Не заказывать рейки и кровать до рулетки.</p>
+    </section>
+    <footer>
+      Планы: design/plans/ · рендеры: design/renders/ · полный бриф: DESIGN.md
+    </footer>
+  </main>
+</body>
+</html>

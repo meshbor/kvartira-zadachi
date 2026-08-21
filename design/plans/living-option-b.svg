@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 680" width="920" height="680" role="img" aria-label="Plan gostinoj B otkidnaya krovat">
+  <title>Gostinaya B</title>
+  <style>
+    .bg { fill: #f7f1e8; }
+    .wall { fill: #ebe4d8; stroke: #2c241c; stroke-width: 8; }
+    .open { fill: #fffdf8; }
+    .sofa { fill: #e4d5c0; stroke: #8a7358; stroke-width: 1.2; }
+    .fire { fill: #cfc6bb; stroke: #6a5c4a; stroke-width: 1.2; }
+    .tv { fill: #222; }
+    .murphy { fill: #5c4030; stroke: #2c241c; stroke-width: 1.3; }
+    .bed-open { fill: #d9c4a8; fill-opacity: 0.55; stroke: #8b5e3c; stroke-width: 1.4; stroke-dasharray: 6 4; }
+    .rug { fill: #e8dcc8; stroke: #c4b49a; stroke-width: 1; }
+    .window { fill: #d7e7f2; stroke: #3d6a88; stroke-width: 2; }
+    .dim { stroke: #6a5c4a; stroke-width: 1; fill: none; }
+    .warn { stroke: #a33; stroke-width: 1.3; fill: none; }
+    .dim-txt { font: 11px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #6a5c4a; }
+    .lbl { font: 12px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #2c241c; }
+    .lbl-sm { font: 10px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #5a4e40; }
+    .title { font: 700 18px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #2c241c; }
+    .sub { font: 12px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #6a5c4a; }
+    .note { font: 11px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #6a5c4a; }
+    .warn-txt { font: 11px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #8b2a2a; }
+    .scale-fill { fill: #2c241c; }
+    .scale-empty { fill: #fffdf8; stroke: #2c241c; stroke-width: 1; }
+  </style>
+  <rect class="bg" width="920" height="680"/>
+  <text class="title" x="40" y="36">Гостиная — вариант B (запасной)</text>
+  <text class="sub" x="40" y="56">Вертикальная откидная 90 см в нише, открытая ест 2,0-2,2 м, масштаб 1:50, 1 м = 70 px</text>
+
+  <g transform="translate(70,90)">
+    <rect class="wall" x="0" y="0" width="490" height="245"/>
+    <rect class="open" x="4" y="4" width="482" height="237"/>
+
+    <rect x="-8" y="90" width="16" height="56" fill="#f7f1e8"/>
+    <path d="M4,90 A56,56 0 0 1 4,146" fill="none" stroke="#8b5e3c" stroke-width="1.2" stroke-dasharray="3 2"/>
+    <text class="lbl-sm" x="8" y="84">вход</text>
+
+    <rect class="window" x="482" y="70" width="14" height="105"/>
+    <text class="lbl-sm" x="500" y="110" writing-mode="tb">окно</text>
+
+    <rect class="fire" x="200" y="8" width="90" height="28"/>
+    <rect class="tv" x="218" y="10" width="54" height="8"/>
+    <rect x="228" y="22" width="34" height="10" fill="#e07a3a"/>
+    <text class="lbl-sm" x="214" y="48">ТВ / камин</text>
+
+    <rect class="murphy" x="392" y="8" width="77" height="32"/>
+    <text class="lbl-sm" x="400" y="28" fill="#f3e6d0">шкаф 90 x 200</text>
+    <text class="lbl-sm" x="398" y="52">закрыто ~1,10 x 0,45</text>
+
+    <rect class="bed-open" x="392" y="40" width="77" height="147"/>
+    <text class="lbl-sm" x="404" y="110">открыто</text>
+    <text class="lbl-sm" x="400" y="124">вылет 2,10 м</text>
+    <text class="lbl-sm" x="408" y="138">матрас 90</text>
+
+    <line class="warn" x1="392" y1="187" x2="469" y2="187"/>
+    <text class="warn-txt" x="300" y="200">остаток до стены ~0,8-1,3 м</text>
+
+    <rect class="rug" x="140" y="90" width="150" height="130" rx="4"/>
+    <rect class="sofa" x="150" y="168" width="130" height="48" rx="6"/>
+    <text class="lbl-sm" x="194" y="196">диван</text>
+    <text class="warn-txt" x="150" y="160">ночью проход к окну режется</text>
+    <text class="lbl-sm" x="330" y="230">дальняя зона без стола — кухня снова тесная</text>
+
+    <line class="dim" x1="0" y1="-16" x2="490" y2="-16"/>
+    <line class="dim" x1="0" y1="-22" x2="0" y2="-10"/>
+    <line class="dim" x1="490" y1="-22" x2="490" y2="-10"/>
+    <text class="dim-txt" x="210" y="-22">7,00 м</text>
+
+    <line class="dim" x1="-18" y1="0" x2="-18" y2="245"/>
+    <text class="dim-txt" x="-30" y="130" transform="rotate(-90,-30,130)">3,50 м</text>
+
+    <line class="dim" x1="480" y1="8" x2="520" y2="8"/>
+    <line class="dim" x1="520" y1="8" x2="520" y2="40"/>
+    <text class="dim-txt" x="524" y="28">0,45</text>
+    <line class="dim" x1="475" y1="40" x2="475" y2="187"/>
+    <text class="dim-txt" x="478" y="120">2,10</text>
+  </g>
+
+  <g transform="translate(70,380)">
+    <rect class="scale-fill" x="0" y="0" width="35" height="8"/>
+    <rect class="scale-empty" x="35" y="0" width="35" height="8"/>
+    <text class="dim-txt" x="0" y="22">0</text>
+    <text class="dim-txt" x="60" y="22">1 м</text>
+  </g>
+
+  <g transform="translate(70,420)">
+    <text class="lbl" x="0" y="0">Жёсткие условия, без которых B не заказывать</text>
+    <text class="note" x="0" y="20">1. Рулеткой: ширина ниши окно-камин. Для 90 см шкафа нужно ~1,05-1,10 м; для 140 см — ~1,55-1,65 м (часто не влезет).</text>
+    <text class="note" x="0" y="36">2. Стена — бетон / кирпич / газоблок + хим. анкер. Гипсокартон на профиле — отказ.</text>
+    <text class="note" x="0" y="52">3. Пианино из ниши уезжает. Высота ниши от 2,15 м. Матрас 140-180 мм, не высокий пружинный.</text>
+    <text class="note" x="0" y="68">4. Гости ночуют часто. Иначе — раскладушка 90 в шкафу за 8-15 тыс. руб.</text>
+    <text class="warn-txt" x="0" y="90">Цены: готовая 90 ~40-70 тыс. / 140 ~70-150 тыс. / фасад в цвет комнаты 150-280 тыс. + матрас. Fly-bed, цех кухонь, не подъёмная царга Hoff.</text>
+  </g>
+</svg>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 620" width="820" height="620" role="img" aria-label="Plan kuhni 4.50 x 2.70 m">
+  <title>Kuhnya - plan 1:50</title>
+  <style>
+    .bg { fill: #f7f1e8; }
+    .wall { fill: #ebe4d8; stroke: #2c241c; stroke-width: 8; }
+    .open { fill: #fffdf8; }
+    .cab { fill: #f3e6d0; stroke: #b9a078; stroke-width: 1.2; }
+    .stone { fill: #c4a882; }
+    .table { fill: #d8b07a; stroke: #8a6232; stroke-width: 1.4; }
+    .chair { fill: #efe3d0; stroke: #8a6232; stroke-width: 1.1; }
+    .appliance { fill: #cfd4d8; stroke: #5c6570; stroke-width: 1; }
+    .washer { fill: #dfe3e6; stroke: #5c6570; stroke-width: 1; }
+    .window { fill: #d7e7f2; stroke: #3d6a88; stroke-width: 2; }
+    .dim { stroke: #6a5c4a; stroke-width: 1; fill: none; }
+    .dim-txt { font: 11px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #6a5c4a; }
+    .lbl { font: 12px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #2c241c; }
+    .lbl-sm { font: 10px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #5a4e40; }
+    .title { font: 700 18px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #2c241c; }
+    .sub { font: 12px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #6a5c4a; }
+    .circ { stroke: #8b5e3c; stroke-width: 1.4; stroke-dasharray: 5 4; fill: none; }
+    .note { font: 11px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #6a5c4a; }
+    .scale-fill { fill: #2c241c; }
+    .scale-empty { fill: #fffdf8; stroke: #2c241c; stroke-width: 1; }
+  </style>
+  <rect class="bg" width="820" height="620"/>
+  <text class="title" x="40" y="36">Кухня — вид сверху</text>
+  <text class="sub" x="40" y="56">Гипотеза: 4,50 x 2,70 м между стенами, гарнитур 0,60 м, масштаб 1:50, 1 м = 80 px</text>
+
+  <g transform="translate(80,110)">
+    <rect class="wall" x="0" y="0" width="360" height="216"/>
+    <rect class="open" x="4" y="4" width="352" height="208"/>
+
+    <rect x="-6" y="78" width="14" height="56" fill="#f7f1e8"/>
+    <path d="M4,78 A56,56 0 0 1 4,134" fill="none" stroke="#8b5e3c" stroke-width="1.2" stroke-dasharray="3 2"/>
+    <text class="lbl-sm" x="8" y="74">вход из прихожей</text>
+
+    <rect class="window" x="354" y="48" width="12" height="120"/>
+    <text class="lbl-sm" x="370" y="96" writing-mode="tb">окно + батарея</text>
+    <line x1="346" y1="48" x2="346" y2="168" stroke="#cfc3b0" stroke-width="3"/>
+    <text class="lbl-sm" x="268" y="44">римская + панели</text>
+
+    <rect class="cab" x="8" y="8" width="292" height="48"/>
+    <rect class="cab" x="8" y="8" width="72" height="72"/>
+    <rect class="washer" x="16" y="40" width="32" height="32"/>
+    <text class="lbl-sm" x="18" y="58">стир.</text>
+    <rect class="appliance" x="20" y="14" width="24" height="16"/>
+    <text class="lbl-sm" x="22" y="26">СВЧ</text>
+    <text class="lbl-sm" x="12" y="86">полуостров</text>
+
+    <rect class="cab" x="80" y="8" width="220" height="48"/>
+    <rect class="stone" x="80" y="8" width="176" height="10"/>
+    <ellipse cx="110" cy="34" rx="16" ry="10" fill="#e8eef2" stroke="#6a7a88"/>
+    <text class="lbl-sm" x="98" y="54">мойка</text>
+    <rect class="appliance" x="150" y="18" width="40" height="30"/>
+    <circle cx="160" cy="28" r="3" fill="#444"/>
+    <circle cx="172" cy="28" r="3" fill="#444"/>
+    <circle cx="160" cy="38" r="3" fill="#444"/>
+    <circle cx="172" cy="38" r="3" fill="#444"/>
+    <text class="lbl-sm" x="148" y="62">плита / духовка</text>
+    <rect class="appliance" x="256" y="8" width="44" height="48"/>
+    <text class="lbl-sm" x="260" y="36">холод.</text>
+    <text class="lbl-sm" x="88" y="22">гарнитур 0,60 м — не трогаем</text>
+
+    <rect class="table" x="268" y="86" width="56" height="96" rx="3"/>
+    <text class="lbl" x="274" y="128">стол</text>
+    <text class="lbl-sm" x="272" y="142">120 x 70</text>
+    <text class="lbl-sm" x="270" y="154">// окну</text>
+
+    <rect class="chair" x="246" y="100" width="18" height="18" rx="2"/>
+    <rect class="chair" x="246" y="150" width="18" height="18" rx="2"/>
+    <rect class="chair" x="286" y="186" width="18" height="16" rx="2"/>
+    <text class="lbl-sm" x="228" y="98">2-3 стула</text>
+
+    <path class="circ" d="M40,160 L240,160 L240,120"/>
+    <text class="lbl-sm" x="70" y="176">проход от 0,90 м вдоль гарнитура</text>
+    <text class="lbl-sm" x="12" y="200">складные x2 — в купе / за полуостровом</text>
+
+    <line class="dim" x1="0" y1="-18" x2="360" y2="-18"/>
+    <line class="dim" x1="0" y1="-24" x2="0" y2="-12"/>
+    <line class="dim" x1="360" y1="-24" x2="360" y2="-12"/>
+    <text class="dim-txt" x="150" y="-24">4,50 м (вдоль гарнитура)</text>
+
+    <line class="dim" x1="-22" y1="0" x2="-22" y2="216"/>
+    <line class="dim" x1="-28" y1="0" x2="-16" y2="0"/>
+    <line class="dim" x1="-28" y1="216" x2="-16" y2="216"/>
+    <text class="dim-txt" x="-34" y="116" transform="rotate(-90,-34,116)">2,70 м</text>
+
+    <line class="dim" x1="200" y1="8" x2="200" y2="56"/>
+    <text class="dim-txt" x="204" y="36">0,60</text>
+    <line class="dim" x1="324" y1="70" x2="356" y2="70"/>
+    <text class="dim-txt" x="326" y="66">0,40</text>
+  </g>
+
+  <g transform="translate(80,360)">
+    <rect class="scale-fill" x="0" y="0" width="40" height="8"/>
+    <rect class="scale-empty" x="40" y="0" width="40" height="8"/>
+    <text class="dim-txt" x="0" y="22">0</text>
+    <text class="dim-txt" x="72" y="22">1 м</text>
+    <text class="dim-txt" x="100" y="22">масштаб 1:50</text>
+  </g>
+
+  <g transform="translate(80,400)">
+    <text class="lbl" x="0" y="0">Правила расстановки</text>
+    <text class="note" x="0" y="20">Длинная сторона стола параллельна окну — не в правый угол.</text>
+    <text class="note" x="0" y="36">Стулья каждый день — со стороны комнаты; у батареи не сидим.</text>
+    <text class="note" x="0" y="52">Полуостров: створка стиральной от 0,70 м. Стол в этот сектор не ставить.</text>
+    <text class="note" x="0" y="68">Если 2,70 м — это уже чистый пол без гарнитура, ширина комнаты ~3,30 м: тогда возможен круг D100.</text>
+    <text class="note" x="0" y="84">Гарнитур, мойка, плита, духовка, холодильник — без перестановки, кроме стола и стульев.</text>
+  </g>
+
+  <g transform="translate(520,110)">
+    <text class="lbl" x="0" y="0">Условные обозначения</text>
+    <rect class="cab" x="0" y="16" width="28" height="16"/>
+    <text class="lbl-sm" x="36" y="28">кремовый шейкер</text>
+    <rect class="table" x="0" y="40" width="28" height="16"/>
+    <text class="lbl-sm" x="36" y="52">стол дуб 120 x 70</text>
+    <rect class="window" x="0" y="64" width="28" height="16"/>
+    <text class="lbl-sm" x="36" y="76">окно</text>
+    <rect class="appliance" x="0" y="88" width="28" height="16"/>
+    <text class="lbl-sm" x="36" y="100">техника</text>
+    <line class="circ" x1="0" y1="124" x2="28" y2="124"/>
+    <text class="lbl-sm" x="36" y="128">циркуляция</text>
+  </g>
+</svg>

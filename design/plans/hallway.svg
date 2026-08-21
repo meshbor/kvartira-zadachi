@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 560" width="780" height="560" role="img" aria-label="Plan prihozhej 2.60 x 1.40 m">
+  <title>Prihozhaya - plan 1:40</title>
+  <style>
+    .bg { fill: #f7f1e8; }
+    .wall { fill: #ebe4d8; stroke: #2c241c; stroke-width: 8; }
+    .open { fill: #fffdf8; }
+    .ward { fill: #5c4a3a; stroke: #2c241c; stroke-width: 1.2; }
+    .ward-glass { fill: #d5cfc6; fill-opacity: 0.55; stroke: #2c241c; stroke-width: 0.8; }
+    .felt { fill: #3a3a3a; }
+    .bench { fill: #4a3728; stroke: #2c241c; stroke-width: 1; }
+    .seat { fill: #efe6d6; }
+    .hook { fill: #1a1a1a; }
+    .runner { fill: #6a6a6a; fill-opacity: 0.35; }
+    .dim { stroke: #6a5c4a; stroke-width: 1; fill: none; }
+    .dim-txt { font: 11px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #6a5c4a; }
+    .lbl { font: 12px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #2c241c; }
+    .lbl-sm { font: 10px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #5a4e40; }
+    .title { font: 700 18px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #2c241c; }
+    .sub { font: 12px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #6a5c4a; }
+    .note { font: 11px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #6a5c4a; }
+    .circ { stroke: #8b5e3c; stroke-width: 1.4; stroke-dasharray: 5 4; fill: none; }
+    .scale-fill { fill: #2c241c; }
+    .scale-empty { fill: #fffdf8; stroke: #2c241c; stroke-width: 1; }
+  </style>
+  <rect class="bg" width="780" height="560"/>
+  <text class="title" x="40" y="36">Прихожая — вид сверху</text>
+  <text class="sub" x="40" y="56">2,60 x 1,40 м, рейки не толще 25-30 мм выноса, масштаб 1:40, 1 м = 100 px</text>
+
+  <g transform="translate(90,100)">
+    <rect class="wall" x="0" y="0" width="260" height="140"/>
+    <rect class="open" x="4" y="4" width="252" height="132"/>
+
+    <rect x="-8" y="42" width="16" height="56" fill="#f7f1e8"/>
+    <path d="M4,42 A56,56 0 0 1 4,98" fill="none" stroke="#8b5e3c" stroke-width="1.2" stroke-dasharray="3 2"/>
+    <text class="lbl-sm" x="-10" y="36">входная дверь</text>
+
+    <rect class="ward" x="8" y="8" width="220" height="45"/>
+    <rect class="ward-glass" x="12" y="12" width="64" height="37"/>
+    <rect class="ward-glass" x="82" y="12" width="64" height="37"/>
+    <rect class="ward-glass" x="152" y="12" width="64" height="37"/>
+    <text class="lbl-sm" x="70" y="34" fill="#f7f1e8">шкаф-купе 0,45 м, несезон</text>
+    <text class="lbl-sm" x="8" y="62">секция под плечики 500 мм для пуховиков</text>
+
+    <rect class="felt" x="8" y="126" width="208" height="6"/>
+    <g fill="#c4a06a">
+      <rect x="10" y="126" width="2" height="6"/>
+      <rect x="16" y="126" width="2" height="6"/>
+      <rect x="22" y="126" width="2" height="6"/>
+      <rect x="28" y="126" width="2" height="6"/>
+      <rect x="34" y="126" width="2" height="6"/>
+      <rect x="40" y="126" width="2" height="6"/>
+      <rect x="46" y="126" width="2" height="6"/>
+      <rect x="52" y="126" width="2" height="6"/>
+      <rect x="58" y="126" width="2" height="6"/>
+      <rect x="64" y="126" width="2" height="6"/>
+      <rect x="70" y="126" width="2" height="6"/>
+      <rect x="76" y="126" width="2" height="6"/>
+      <rect x="82" y="126" width="2" height="6"/>
+      <rect x="88" y="126" width="2" height="6"/>
+      <rect x="94" y="126" width="2" height="6"/>
+      <rect x="100" y="126" width="2" height="6"/>
+      <rect x="106" y="126" width="2" height="6"/>
+      <rect x="112" y="126" width="2" height="6"/>
+      <rect x="118" y="126" width="2" height="6"/>
+      <rect x="124" y="126" width="2" height="6"/>
+      <rect x="130" y="126" width="2" height="6"/>
+      <rect x="136" y="126" width="2" height="6"/>
+      <rect x="142" y="126" width="2" height="6"/>
+      <rect x="148" y="126" width="2" height="6"/>
+      <rect x="154" y="126" width="2" height="6"/>
+      <rect x="160" y="126" width="2" height="6"/>
+      <rect x="166" y="126" width="2" height="6"/>
+      <rect x="172" y="126" width="2" height="6"/>
+      <rect x="178" y="126" width="2" height="6"/>
+      <rect x="184" y="126" width="2" height="6"/>
+      <rect x="190" y="126" width="2" height="6"/>
+      <rect x="196" y="126" width="2" height="6"/>
+      <rect x="202" y="126" width="2" height="6"/>
+      <rect x="208" y="126" width="2" height="6"/>
+    </g>
+    <text class="lbl-sm" x="40" y="122">дадо рейки 1,40 м выс., вынос до 25 мм</text>
+
+    <rect class="felt" x="248" y="56" width="8" height="76"/>
+    <g fill="#c4a06a">
+      <rect x="248" y="58" width="8" height="2"/>
+      <rect x="248" y="64" width="8" height="2"/>
+      <rect x="248" y="70" width="8" height="2"/>
+      <rect x="248" y="76" width="8" height="2"/>
+      <rect x="248" y="82" width="8" height="2"/>
+      <rect x="248" y="88" width="8" height="2"/>
+      <rect x="248" y="94" width="8" height="2"/>
+      <rect x="248" y="100" width="8" height="2"/>
+      <rect x="248" y="106" width="8" height="2"/>
+      <rect x="248" y="112" width="8" height="2"/>
+      <rect x="248" y="118" width="8" height="2"/>
+      <rect x="248" y="124" width="8" height="2"/>
+    </g>
+    <circle class="hook" cx="244" cy="72" r="2.2"/>
+    <circle class="hook" cx="244" cy="86" r="2.2"/>
+    <circle class="hook" cx="244" cy="100" r="2.2"/>
+    <text class="lbl-sm" x="262" y="80">крючки</text>
+    <text class="lbl-sm" x="262" y="94">110 / 165 см</text>
+
+    <rect class="bench" x="210" y="70" width="38" height="56"/>
+    <rect class="seat" x="212" y="72" width="12" height="52"/>
+    <text class="lbl-sm" x="214" y="102" fill="#f7f1e8">банкетка</text>
+    <text class="lbl-sm" x="168" y="88">1,00 x 0,38</text>
+
+    <rect class="runner" x="70" y="68" width="130" height="40" rx="4"/>
+    <text class="lbl-sm" x="100" y="92">дорожка 0,80</text>
+
+    <path class="circ" d="M20,90 L200,90"/>
+    <text class="lbl-sm" x="80" y="108">проход ~0,90-1,00 м</text>
+
+    <line class="dim" x1="0" y1="-16" x2="260" y2="-16"/>
+    <line class="dim" x1="0" y1="-22" x2="0" y2="-10"/>
+    <line class="dim" x1="260" y1="-22" x2="260" y2="-10"/>
+    <text class="dim-txt" x="100" y="-22">2,60 м</text>
+
+    <line class="dim" x1="-20" y1="0" x2="-20" y2="140"/>
+    <line class="dim" x1="-26" y1="0" x2="-14" y2="0"/>
+    <line class="dim" x1="-26" y1="140" x2="-14" y2="140"/>
+    <text class="dim-txt" x="-32" y="78" transform="rotate(-90,-32,78)">1,40 м</text>
+
+    <line class="dim" x1="8" y1="8" x2="8" y2="53"/>
+    <text class="dim-txt" x="12" y="34">0,45</text>
+  </g>
+
+  <g transform="translate(90,280)">
+    <rect class="scale-fill" x="0" y="0" width="50" height="8"/>
+    <rect class="scale-empty" x="50" y="0" width="50" height="8"/>
+    <text class="dim-txt" x="0" y="22">0</text>
+    <text class="dim-txt" x="90" y="22">1 м   масштаб 1:40</text>
+  </g>
+
+  <g transform="translate(90,320)">
+    <text class="lbl" x="0" y="0">Схема хранения зима / каждый день</text>
+    <text class="note" x="0" y="20">Крючки торца: только недельный комплект (6-8 вещей). Пуховики — в купе на плечики.</text>
+    <text class="note" x="0" y="36">Детский ряд 1100 мм, взрослый 1650 мм. Сумка из зала — нижний крючок или ящик банкетки, не кухня.</text>
+    <text class="note" x="0" y="52">Сечение рейки 20 x 40 плашмя (20 мм к комнате). Не брус 40 x 40 — коридор 1,40 м.</text>
+    <text class="note" x="0" y="68">Правая стена: дадо 1400 мм. Выше — моющаяся краска тауп или винил 3 волны, темнее кухни.</text>
+    <text class="note" x="0" y="84">Проёмы в комнаты на плане Paint проверить: рейки обходят наличники, не клеятся поверх.</text>
+  </g>
+</svg>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 640" width="920" height="640" role="img" aria-label="Plan gostinoj A stol u okna">
+  <title>Gostinaya A</title>
+  <style>
+    .bg { fill: #f7f1e8; }
+    .wall { fill: #ebe4d8; stroke: #2c241c; stroke-width: 8; }
+    .open { fill: #fffdf8; }
+    .sofa { fill: #e4d5c0; stroke: #8a7358; stroke-width: 1.2; }
+    .table { fill: #d8b07a; stroke: #8a6232; stroke-width: 1.4; }
+    .chair { fill: #efe3d0; stroke: #8a6232; stroke-width: 1; }
+    .fire { fill: #cfc6bb; stroke: #6a5c4a; stroke-width: 1.2; }
+    .tv { fill: #222; }
+    .piano { fill: #1a1a1a; }
+    .rug { fill: #e8dcc8; stroke: #c4b49a; stroke-width: 1; }
+    .window { fill: #d7e7f2; stroke: #3d6a88; stroke-width: 2; }
+    .dim { stroke: #6a5c4a; stroke-width: 1; fill: none; }
+    .dim-txt { font: 11px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #6a5c4a; }
+    .lbl { font: 12px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #2c241c; }
+    .lbl-sm { font: 10px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #5a4e40; }
+    .title { font: 700 18px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #2c241c; }
+    .sub { font: 12px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #6a5c4a; }
+    .note { font: 11px "DejaVu Sans", "Noto Sans", Arial, sans-serif; fill: #6a5c4a; }
+    .circ { stroke: #8b5e3c; stroke-width: 1.4; stroke-dasharray: 5 4; fill: none; }
+    .zone { fill: #c4a06a; fill-opacity: 0.12; stroke: #8b5e3c; stroke-width: 1; stroke-dasharray: 4 3; }
+    .ok { fill: #2f6b4f; font: 700 13px "DejaVu Sans", "Noto Sans", Arial, sans-serif; }
+    .scale-fill { fill: #2c241c; }
+    .scale-empty { fill: #fffdf8; stroke: #2c241c; stroke-width: 1; }
+  </style>
+  <rect class="bg" width="920" height="640"/>
+  <text class="title" x="40" y="36">Гостиная — вариант A (рекомендуемый)</text>
+  <text class="sub" x="40" y="56">7,00 x 3,50 м, стол у окна, ниша справа от окна / пианино, масштаб 1:50, 1 м = 70 px</text>
+
+  <g transform="translate(70,90)">
+    <rect class="wall" x="0" y="0" width="490" height="245"/>
+    <rect class="open" x="4" y="4" width="482" height="237"/>
+
+    <rect x="-8" y="90" width="16" height="56" fill="#f7f1e8"/>
+    <path d="M4,90 A56,56 0 0 1 4,146" fill="none" stroke="#8b5e3c" stroke-width="1.2" stroke-dasharray="3 2"/>
+    <text class="lbl-sm" x="8" y="84">вход из прихожей</text>
+
+    <rect class="window" x="482" y="70" width="14" height="105"/>
+    <text class="lbl-sm" x="500" y="110" writing-mode="tb">окно</text>
+
+    <rect class="zone" x="329" y="8" width="157" height="229"/>
+    <text class="lbl-sm" x="350" y="22">дальняя зона ~2,3 м</text>
+
+    <rect class="table" x="391" y="72" width="63" height="112" rx="3"/>
+    <text class="lbl" x="400" y="124">стол</text>
+    <text class="lbl-sm" x="398" y="138">160 x 90</text>
+    <rect class="chair" x="372" y="88" width="16" height="16" rx="2"/>
+    <rect class="chair" x="372" y="152" width="16" height="16" rx="2"/>
+    <rect class="chair" x="457" y="88" width="14" height="16" rx="2"/>
+    <rect class="chair" x="457" y="152" width="14" height="16" rx="2"/>
+    <circle cx="422" cy="128" r="7" fill="none" stroke="#8a6232" stroke-width="0.8"/>
+    <text class="lbl-sm" x="408" y="70">подвес</text>
+
+    <text class="lbl-sm" x="300" y="40">ниша (пианино)</text>
+    <rect class="piano" x="310" y="8" width="42" height="18"/>
+    <text class="lbl-sm" x="312" y="20" fill="#eee">пиано</text>
+
+    <rect class="fire" x="200" y="8" width="90" height="28"/>
+    <rect class="tv" x="218" y="10" width="54" height="8"/>
+    <rect x="228" y="22" width="34" height="10" fill="#e07a3a"/>
+    <text class="lbl-sm" x="214" y="48">ТВ / камин</text>
+
+    <rect class="rug" x="160" y="100" width="150" height="120" rx="4"/>
+    <rect class="sofa" x="170" y="175" width="130" height="48" rx="6"/>
+    <rect class="sofa" x="170" y="168" width="18" height="55" rx="4"/>
+    <rect class="sofa" x="282" y="168" width="18" height="55" rx="4"/>
+    <text class="lbl-sm" x="214" y="204">диван</text>
+    <text class="lbl-sm" x="200" y="168">мягкая зона</text>
+
+    <path class="circ" d="M40,130 L360,130 L360,90"/>
+    <text class="lbl-sm" x="80" y="122">проход от 0,80 м к окну</text>
+
+    <line class="dim" x1="0" y1="-16" x2="490" y2="-16"/>
+    <line class="dim" x1="0" y1="-22" x2="0" y2="-10"/>
+    <line class="dim" x1="490" y1="-22" x2="490" y2="-10"/>
+    <text class="dim-txt" x="210" y="-22">7,00 м</text>
+
+    <line class="dim" x1="-18" y1="0" x2="-18" y2="245"/>
+    <line class="dim" x1="-24" y1="0" x2="-12" y2="0"/>
+    <line class="dim" x1="-24" y1="245" x2="-12" y2="245"/>
+    <text class="dim-txt" x="-30" y="130" transform="rotate(-90,-30,130)">3,50 м</text>
+
+    <line class="dim" x1="329" y1="250" x2="490" y2="250"/>
+    <text class="dim-txt" x="370" y="264">зона стола ~2,3 м</text>
+  </g>
+
+  <g transform="translate(70,400)">
+    <rect class="scale-fill" x="0" y="0" width="35" height="8"/>
+    <rect class="scale-empty" x="35" y="0" width="35" height="8"/>
+    <text class="dim-txt" x="0" y="22">0</text>
+    <text class="dim-txt" x="60" y="22">1 м   масштаб 1:50</text>
+  </g>
+
+  <g transform="translate(70,440)">
+    <text class="ok" x="0" y="0">Почему это основной вариант</text>
+    <text class="note" x="0" y="20">Кухня отдаёт семейный обед сюда — и перестаёт быть проходной столовой. Дальняя зона получает функцию.</text>
+    <text class="note" x="0" y="36">Пианино в нише остаётся. Камин и ТВ не двигаем. Стены с готовой штукатуркой не переклеиваем.</text>
+    <text class="note" x="0" y="52">Стол 140-160 x 80-90, 4 стула, подвес на оси стола. Ковёр только у дивана, не под обедом.</text>
+    <text class="note" x="0" y="68">Смета зоны: 50-120 тыс. руб. Это дешевле откидной 140 и не блокирует гостиную на ночь.</text>
+  </g>
+</svg>
