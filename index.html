@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Доделка квартиры 92 м²</title>
+  <style>
+    :root { --ink:#2c241c; --muted:#6b5e52; --bg:#f7f3ec; --card:#fff; --line:#d9cfc3; --good:#2d6a4f; --bad:#8a3a2a; --blue:#1e5aa8; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 18px/1.5 Georgia, "Times New Roman", serif; color: var(--ink); background: var(--bg); }
+    main { max-width: 920px; margin: 0 auto; padding: 48px 24px 96px; }
+    h1 { font-size: 2rem; font-weight: 400; margin: 0 0 8px; }
+    h2 { font-size: 1.45rem; font-weight: 400; margin: 48px 0 12px; }
+    h3 { font-size: 1.1rem; margin: 28px 0 8px; }
+    .lead { font-size: 1.15rem; color: var(--muted); margin-bottom: 32px; }
+    .plan { width: 100%; height: auto; background: var(--card); border: 1px solid var(--line); margin: 16px 0 8px; }
+    figure { margin: 24px 0; }
+    figure img { width: 100%; height: auto; display: block; border: 1px solid var(--line); }
+    figcaption { font-size: 0.9rem; color: var(--muted); padding: 8px 0 0; }
+    .call { border-left: 3px solid var(--good); padding: 8px 0 8px 16px; margin: 20px 0; }
+    .warn { border-left-color: var(--bad); }
+    table { border-collapse: collapse; width: 100%; font-size: 0.95rem; margin: 12px 0 24px; }
+    th, td { border-bottom: 1px solid var(--line); text-align: left; padding: 8px 10px; vertical-align: top; }
+    th { color: var(--muted); font-weight: 400; }
+    a { color: var(--blue); }
+    .muted { color: var(--muted); font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Доделка квартиры, 92 м²</h1>
+  <p class="lead">Кухня, прихожая, дальняя часть гостиной. Стенку не трогаем. Спальня и детская уже сделаны. Мокрые зоны — следующий заход.</p>
+
+  <h2>Схема по вашему плану</h2>
+  <img class="plan" src="design/plans/apartment-92.svg" alt="План квартиры 92 м2">
+  <p>Дневная зона: вход, прихожая, туалет 7, кухня 1, гостиная 2. Спальная: детская 3, ванная 6, спальня 4, балкон 5. Гостиная — транзит в спальное крыло, не комната в тупике.</p>
+  <p class="call">Гостей сажать в гостиной у окна. Кухню оставить рабочей. Кровать-трансформер в зале — только если ночуют часто; по циркуляции это слабое место.</p>
+
+  <h2>1. Кухня</h2>
+  <img class="plan" src="design/plans/kitchen.svg" alt="План кухни">
+  <figure>
+    <img src="design/renders/kitchen-concept.jpg" alt="Кухня: грейж, римская штора, стол у окна">
+    <figcaption>Стенка как есть. Свободные стены — винил под штукатурку, теплее и темнее фасадов. Австрийские сваги снимаем.</figcaption>
+  </figure>
+  <figure>
+    <img src="design/renders/kitchen-window-table.jpg" alt="Стол вдоль окна">
+    <figcaption>Стол длинной стороной вдоль окна, не в правом углу. На каждый день 2–3 стула.</figcaption>
+  </figure>
+  <h3>Обои</h3>
+  <p>Не повторять светлый лён с 5-го фото. Нужны виниловые на флизелине, маркировка три волны или щётка, неглубокий рельеф, цвет тёплый грейж. Образец на стену на неделю. Фартук-мозаику не закрывать.</p>
+  <h3>Окно</h3>
+  <p>Потолочная шина + римская штора песок. По желанию две прямые панели, без ламбрекена.</p>
+
+  <h2>2. Прихожая 2,6 × 1,4</h2>
+  <img class="plan" src="design/plans/hallway.svg" alt="План прихожей">
+  <figure>
+    <img src="design/renders/hallway-concept.jpg" alt="Прихожая с рейками и банкеткой">
+    <figcaption>Купе оставить. Открытую вешалку заменить на обувницу-банкетку и рейки с крючками в два ряда.</figcaption>
+  </figure>
+  <figure>
+    <img src="design/renders/hallway-slats-detail.jpg" alt="Деталь реек">
+    <figcaption>Рейка 16–20 мм, не мебель в проход. Выше реек — тёмный тауп, моющийся.</figcaption>
+  </figure>
+  <p>Зима решается ротацией, не количеством крючков: на стене неделя, в купе — сезон. Швабры в санузле 7.</p>
+
+  <h2>3. Гостиная ~7 × 3,5</h2>
+  <img class="plan" src="design/plans/living-option-a.svg" alt="Гостиная, стол у окна">
+  <img class="plan" src="design/plans/living-option-b.svg" alt="Гостиная, шкаф-кровать">
+  <figure>
+    <img src="design/renders/living-dining-zone.jpg" alt="Стол у окна в гостиной">
+    <figcaption>Вариант А — брать. Стол 160×90 у окна, диваны смотрят на камин, дальняя треть занята делом.</figcaption>
+  </figure>
+  <figure>
+    <img src="design/renders/living-murphy-bed.jpg" alt="Шкаф-кровать закрыт">
+    <figcaption>Вариант Б закрытый. Выглядит спокойно, но это шкаф рядом с телевизором.</figcaption>
+  </figure>
+  <figure>
+    <img src="design/renders/living-murphy-open.jpg" alt="Кровать открыта">
+    <figcaption>Открытая 140×200 съедает около 2 м и ложится поперёк транзита в спальню. Имеет смысл только при регулярных ночёвках.</figcaption>
+  </figure>
+  <p class="call warn">Ниша окно–камин: для 140 нужно 155–165 см ширины шкафа, стена бетон/кирпич, потолок не ниже 220 см. Цена на заказ с фасадом 150–280 тыс. руб. + матрас. Fly-Bed, Rubicks, ваш мебельщик. Не ставить, пока не промерите и не решите, что стол вам не нужнее.</p>
+
+  <h2>Порядок денег</h2>
+  <table>
+    <thead><tr><th>Кусок</th><th>Ориентир</th></tr></thead>
+    <tbody>
+      <tr><td>Обои кухня + прихожая, работа</td><td>40–90 тыс. руб.</td></tr>
+      <tr><td>Римская штора + карниз</td><td>15–35 тыс. руб.</td></tr>
+      <tr><td>Стол на кухню + стулья</td><td>25–60 тыс. руб.</td></tr>
+      <tr><td>Стол в гостиную на 6</td><td>50–120 тыс. руб.</td></tr>
+      <tr><td>Рейки, крючки, обувница</td><td>40–90 тыс. руб.</td></tr>
+      <tr><td>Всё без трансформера</td><td>~180–400 тыс. руб.</td></tr>
+      <tr><td>Шкаф-кровать 140 на заказ</td><td>+150–280 тыс. руб.</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Полный текст с закупкой и списком промеров — в <a href="DESIGN.md">DESIGN.md</a>.</p>
+</main>
+</body>
+</html>
