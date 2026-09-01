@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#14120f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Задачи по квартире</title>
+  <style>
+    :root {
+      --bg: #14120f;
+      --bg-elev: #1d1a16;
+      --line: #322c25;
+      --text: #f3eee6;
+      --muted: #a89f93;
+      --urgent: #ff8a4c;
+      --accent: #d4b483;
+      --done: #7d9a78;
+      --hit: 2.75rem;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      padding:
+        calc(0.75rem + env(safe-area-inset-top))
+        calc(1rem + env(safe-area-inset-right))
+        calc(2rem + env(safe-area-inset-bottom))
+        calc(1rem + env(safe-area-inset-left));
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      margin: -0.75rem -1rem 1rem;
+      padding: 0.85rem 1rem 0.75rem;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+    }
+
+    .sub {
+      margin: 0.2rem 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.7rem;
+    }
+
+    .bar {
+      flex: 1;
+      height: 0.45rem;
+      border-radius: 999px;
+      background: var(--line);
+      overflow: hidden;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--accent);
+      transition: width 0.2s ease;
+    }
+
+    #count { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.9rem; }
+
+    section {
+      background: var(--bg-elev);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      margin: 0 0 0.85rem;
+      overflow: hidden;
+    }
+
+    section.urgent { border-color: color-mix(in srgb, var(--urgent) 45%, var(--line)); }
+
+    h2 {
+      margin: 0;
+      padding: 0.85rem 1rem 0.15rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    section.urgent h2 { color: var(--urgent); }
+
+    .note {
+      margin: 0;
+      padding: 0 1rem 0.55rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    ul { list-style: none; margin: 0; padding: 0.15rem 0 0.4rem; }
+
+    li + li { border-top: 1px solid var(--line); }
+
+    label {
+      display: grid;
+      grid-template-columns: var(--hit) 1fr;
+      align-items: start;
+      gap: 0.15rem 0.15rem;
+      min-height: var(--hit);
+      padding: 0.45rem 0.85rem 0.55rem 0.45rem;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    label:active { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+
+    input[type="checkbox"] {
+      appearance: none;
+      width: 1.45rem;
+      height: 1.45rem;
+      margin: 0.45rem auto 0;
+      border: 2px solid var(--accent);
+      border-radius: 0.4rem;
+      background: transparent;
+      display: grid;
+      place-content: center;
+    }
+
+    input[type="checkbox"]::after {
+      content: "";
+      width: 0.7rem;
+      height: 0.38rem;
+      border: 2.5px solid var(--bg);
+      border-top: 0;
+      border-right: 0;
+      transform: rotate(-50deg) scale(0);
+      transform-origin: center;
+    }
+
+    input[type="checkbox"]:checked {
+      background: var(--done);
+      border-color: var(--done);
+    }
+
+    input[type="checkbox"]:checked::after { transform: rotate(-50deg) scale(1); }
+
+    input[type="checkbox"]:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .title { padding-top: 0.55rem; font-weight: 550; }
+
+    .hint {
+      display: block;
+      margin-top: 0.15rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 400;
+    }
+
+    label:has(input:checked) .title {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: var(--bg-elev);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 0.55rem 0.85rem;
+      font: inherit;
+      font-size: 0.88rem;
+    }
+
+    button:active { opacity: 0.8; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Задачи по квартире</h1>
+    <p class="sub">Личный список. Отметки только на этом телефоне.</p>
+    <div class="progress">
+      <div class="bar" aria-hidden="true"><span id="bar"></span></div>
+      <span id="count">0 / 0</span>
+    </div>
+  </header>
+
+  <main id="list"></main>
+
+  <footer>
+    <span>Данные в localStorage</span>
+    <button type="button" id="reset">Сбросить отметки</button>
+  </footer>
+
+  <script>
+    const STORAGE_KEY = "kvartira-zadachi:v1";
+
+    const SECTIONS = [
+      {
+        id: "car",
+        title: "Срочно: машина",
+        urgent: true,
+        note: "Honda. Завтра предпродажная подготовка / полировка.",
+        tasks: [
+          { id: "car-empty", title: "Вытащить все вещи из Honda" },
+          { id: "car-cover", title: "Оплётка на руль" }
+        ]
+      },
+      {
+        id: "gs8",
+        title: "Продажа GAC GS8",
+        urgent: true,
+        note: "После подготовки. Никогда не продавал машину частником.",
+        tasks: [
+          { id: "gs8-list", title: "Понять, как выставлять GAC GS8 на продажу" },
+          { id: "gs8-market", title: "Спросить на авторынке, как продавать частником" },
+          { id: "gs8-flippers", title: "Продажа с минимумом проблем", hint: "Чтобы поменьше звонили перекупы" }
+        ]
+      },
+      {
+        id: "weight",
+        title: "Здоровье",
+        urgent: true,
+        note: "Главное после отпуска.",
+        tasks: [
+          { id: "wt-back", title: "Снова заняться весом", hint: "После отпуска +4–5 кг" }
+        ]
+      },
+      {
+        id: "kitchen-clean",
+        title: "Кухня: уборка",
+        tasks: [
+          { id: "kc-tidy", title: "Прибраться и убрать мусор" },
+          { id: "kc-recycle", title: "Сдать пластик и картон" },
+          { id: "kc-veg", title: "Приготовить старые овощи", hint: "Картошка, морковка" },
+          { id: "kc-coffee", title: "Помыть кофемашину" },
+          { id: "kc-mixer", title: "Починить миксер King Mix", hint: "Шумит" },
+          { id: "kc-mold", title: "Потемнения возле мойки", hint: "Понять, как вычистить" }
+        ]
+      },
+      {
+        id: "kitchen-layout",
+        title: "Кухня: расположение",
+        tasks: [
+          { id: "kl-lights", title: "Фонари у аквариума поднять наверх" },
+          { id: "kl-film", title: "Купить плёнку на подоконник" },
+          { id: "kl-table", title: "Перенести чайный стол", hint: "От мойки к микроволновке" },
+          { id: "kl-cabinet", title: "Временный шкаф в угол" },
+          { id: "kl-top", title: "Пустота ~60 см над шкафами 90 см", hint: "Редко нужное, например вафельница" },
+          { id: "kl-plan", title: "Скинуть фото / план кухни для перестановки" },
+          { id: "kl-squeegee", title: "Купить водосгон для аквариума", hint: "Щётка для стекла; прошлая сломалась" }
+        ]
+      },
+      {
+        id: "kitchen-reno",
+        title: "Кухня: ремонт",
+        tasks: [
+          { id: "kr-wallpaper", title: "Снять обои и поклеить новые" },
+          { id: "kr-door", title: "Дверь со стеклом", hint: "Сейчас двери нет" },
+          { id: "kr-curtains", title: "Карниз и шторы вместе с ремонтом" }
+        ]
+      },
+      {
+        id: "bath",
+        title: "Ванная",
+        tasks: [
+          { id: "ba-parts", title: "Собрать части от ванной в коробку" },
+          { id: "ba-mold", title: "Вычистить плесень / потемнения", hint: "Небольшая, но уже пошла" },
+          { id: "ba-mirror", title: "Добавить зеркало в маленький санузел" }
+        ]
+      },
+      {
+        id: "hallway",
+        title: "Прихожая",
+        note: "~3 м², всё захламлено.",
+        tasks: [
+          { id: "hw-jackets", title: "Место для курток" },
+          { id: "hw-shoes", title: "Обувь и мелочёвка" },
+          { id: "hw-gym", title: "Куда девать вещи после спортзала", hint: "Сейчас на кухню: она ближе всего ко входу" }
+        ]
+      },
+      {
+        id: "closet",
+        title: "Шкаф",
+        tasks: [
+          { id: "cl-sort", title: "Разобрать шкаф с вещами" },
+          { id: "cl-stops", title: "Отбойники шкафа-купе", hint: "Отошли и болтаются, клей не помог" },
+          { id: "cl-glass", title: "Стеклянные двери шкафа", hint: "Дети разбили две штуки" }
+        ]
+      },
+      {
+        id: "thresholds",
+        title: "Порожки",
+        note: "Планки на полу в дверных проёмах между комнатами. Крепятся винтами, стали отходить.",
+        tasks: [
+          { id: "th-screws", title: "Прикрутить порожки", hint: "Найти бежевые винты" }
+        ]
+      },
+      {
+        id: "living",
+        title: "Гостиная",
+        tasks: [
+          { id: "lv-bed", title: "Куда воткнуть вертикальную кровать", hint: "Опускается / поднимается; свободное место; на диване гостям неудобно" },
+          { id: "lv-table", title: "Стол рядом с кроватью для гостей" }
+        ]
+      },
+      {
+        id: "kids",
+        title: "Детская",
+        tasks: [
+          { id: "kd-bed", title: "Починить детскую кроватку", hint: "Непонятно как; здоровая, стоит" },
+          { id: "kd-swords", title: "Держатели для мечей среднего сына", hint: "Световой и волшебный; 3D-печать к кровати, чтобы висели" },
+          { id: "kd-plaster", title: "Заделать дырки в штукатурке", hint: "От ударов детьми" }
+        ]
+      },
+      {
+        id: "bedroom",
+        title: "Спальня",
+        note: "Не срочно, но не забыть.",
+        tasks: [
+          { id: "br-proj", title: "Прикрепить проектор для детей", hint: "Боковой кронштейн есть, новый; непонятно как крепить" }
+        ]
+      },
+      {
+        id: "fireplace",
+        title: "Камин",
+        tasks: [
+          { id: "fp-corners", title: "Мягкие углы на камине", hint: "Всё отлетает, непонятно как держать" }
+        ]
+      },
+      {
+        id: "photos",
+        title: "Фото",
+        tasks: [
+          { id: "ph-print", title: "Распечатать семейные фото на нашем принтере" },
+          { id: "ph-hang", title: "Куда повесить фото", hint: "Верёвка с прищепками, можно заказать на Ozon; куда закрепить" }
+        ]
+      },
+      {
+        id: "garage",
+        title: "Гараж",
+        tasks: [
+          { id: "ga-box", title: "Отвезти в гараж детскую коробку от строительства" }
+        ]
+      },
+      {
+        id: "other",
+        title: "Отдельно",
+        tasks: [
+          { id: "ot-sec", title: "Инфобез / prompt injection", hint: "Как учиться" }
+        ]
+      }
+    ];
+
+    const allIds = SECTIONS.flatMap((s) => s.tasks.map((t) => t.id));
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        return parsed && typeof parsed === "object" ? parsed : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveState(state) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    const state = loadState();
+    const root = document.getElementById("list");
+
+    for (const section of SECTIONS) {
+      const el = document.createElement("section");
+      if (section.urgent) el.className = "urgent";
+
+      const h2 = document.createElement("h2");
+      h2.textContent = section.title;
+      el.appendChild(h2);
+
+      if (section.note) {
+        const p = document.createElement("p");
+        p.className = "note";
+        p.textContent = section.note;
+        el.appendChild(p);
+      }
+
+      const ul = document.createElement("ul");
+      for (const task of section.tasks) {
+        const li = document.createElement("li");
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.id = task.id;
+        input.checked = Boolean(state[task.id]);
+
+        const text = document.createElement("span");
+        text.className = "title";
+        text.append(task.title);
+        if (task.hint) {
+          const hint = document.createElement("span");
+          hint.className = "hint";
+          hint.textContent = task.hint;
+          text.appendChild(hint);
+        }
+
+        label.append(input, text);
+        li.appendChild(label);
+        ul.appendChild(li);
+      }
+      el.appendChild(ul);
+      root.appendChild(el);
+    }
+
+    function updateProgress() {
+      const done = allIds.filter((id) => state[id]).length;
+      const total = allIds.length;
+      document.getElementById("count").textContent = done + " / " + total;
+      document.getElementById("bar").style.width = (total ? (done / total) * 100 : 0) + "%";
+    }
+
+    root.addEventListener("change", (event) => {
+      const input = event.target;
+      if (!(input instanceof HTMLInputElement) || input.type !== "checkbox") return;
+      state[input.id] = input.checked;
+      saveState(state);
+      updateProgress();
+    });
+
+    document.getElementById("reset").addEventListener("click", () => {
+      if (!confirm("Сбросить все отметки на этом устройстве?")) return;
+      for (const id of allIds) {
+        state[id] = false;
+        const input = document.getElementById(id);
+        if (input) input.checked = false;
+      }
+      saveState(state);
+      updateProgress();
+    });
+
+    updateProgress();
+  </script>
+</body>
+</html>
