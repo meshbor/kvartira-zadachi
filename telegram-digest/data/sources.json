@@ -1,0 +1,43 @@
+{
+  "rss": [
+    {
+      "id": "ria",
+      "name": "РИА Новости",
+      "url": "https://ria.ru/export/rss2/index.xml"
+    },
+    {
+      "id": "tass",
+      "name": "ТАСС",
+      "url": "https://tass.ru/rss/v2.xml"
+    },
+    {
+      "id": "interfax",
+      "name": "Интерфакс",
+      "url": "https://www.interfax.ru/rss"
+    },
+    {
+      "id": "klerk",
+      "name": "Клерк",
+      "url": "https://www.klerk.ru/export/news.rss"
+    }
+  ],
+  "telegram": [
+    {
+      "id": "sfr-tg",
+      "name": "Соцфонд в Telegram",
+      "username": "sfr_gov"
+    }
+  ],
+  "html": [
+    {
+      "id": "sfr",
+      "name": "Социальный фонд",
+      "url": "https://sfr.gov.ru/press_center/news/",
+      "itemSelector": "article.re-news__article",
+      "titleSelector": ".re-news__article-title",
+      "linkSelector": "a.re-news__article-link",
+      "dateSelector": "time",
+      "snippetSelector": ".re-news__article-description"
+    }
+  ]
+}
