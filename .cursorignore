@@ -1,0 +1,4 @@
+# Secrets: do not read or index local env files
+.env
+**/.env
+telegram-digest/.env
