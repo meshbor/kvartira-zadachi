@@ -18,9 +18,18 @@ function decodeEntities(value: string) {
 }
 
 export function stripHtml(value: string) {
-  return decodeEntities(value.replace(/<[^>]+>/g, " "))
+  const decoded = decodeEntities(value);
+  return decodeEntities(decoded.replace(/<[^>]+>/g, " "))
     .replace(/\s+/g, " ")
     .trim();
+}
+
+export function cleanExcerpt(title: string, excerpt: string) {
+  const text = stripHtml(excerpt);
+  if (!text) return "";
+  if (/https?:\/\//i.test(text) && !/[а-яё]{8,}/i.test(text)) return "";
+  if (text.toLowerCase().includes(title.toLowerCase().slice(0, 48))) return "";
+  return text.slice(0, 280);
 }
 
 function tagValue(block: string, tag: string) {
@@ -48,7 +57,10 @@ function parseDate(value: string) {
 }
 
 function splitTitleAndSource(title: string, source: string) {
-  const cleaned = title.replace(/\s+/g, " ").trim();
+  const cleaned = title
+    .replace(/\s+/g, " ")
+    .replace(/\s+[—\-]\s+Официальный сайт.*$/i, "")
+    .trim();
   if (source) {
     return { title: cleaned.replace(new RegExp(`\\s+[—\\-]\\s+${escapeRegExp(source)}$`), ""), source };
   }
@@ -84,7 +96,7 @@ export function parseRss(xml: string, fallbackSource = "Новости"): RawArt
       url: tagValue(item, "link") || tagAttr(item, "link", "href"),
       source: resolvedSource,
       publishedAt: parseDate(tagValue(item, "pubDate") || tagValue(item, "dc:date")),
-      excerpt: tagValue(item, "description"),
+      excerpt: cleanExcerpt(title, tagValue(item, "description")),
     };
   });
 }

@@ -33,10 +33,7 @@ async function loadGoogleArticles() {
   const results = await Promise.allSettled(
     GOOGLE_SOURCES.map(async (source) => {
       const xml = await fetchText(googleNewsUrl(source.query));
-      return parseRss(xml, "Google Новости").map((article) => ({
-        ...article,
-        excerpt: article.excerpt || source.categoryHint,
-      }));
+      return parseRss(xml, "Google Новости");
     }),
   );
 

@@ -9,6 +9,7 @@ const CATEGORY_ALIASES: Record<string, Category> = {
   сад: "park",
   площадка: "playground",
   площадки: "playground",
+  площад: "playground",
   детская: "playground",
   двор: "yard",
   дворы: "yard",
@@ -28,7 +29,9 @@ export function interpretQuery(query: string) {
   return {
     categories: [...new Set(categories)],
     districts: matchDistrictQuery(query),
-    onlyFresh: /сегодня|вчера|утром|свеж|за сутки|новое/i.test(query),
+    onlyFresh: /(?:^|\s)(сегодня|вчера|утром|свежее|свежие|новое)(?:\s|$)/i.test(
+      text,
+    ),
   };
 }
 
