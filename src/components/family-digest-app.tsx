@@ -119,7 +119,7 @@ export function FamilyDigestApp({
         <aside className="rail">
           <section>
             <h2>Темы утра</h2>
-            <div className="chip-list">
+            <div className="chip-list scroll-chips">
               {TOPIC_CHIPS.map((chip) => (
                 <button key={chip.query} type="button" onClick={() => ask(chip.query)}>
                   {chip.label}
@@ -212,7 +212,7 @@ export function FamilyDigestApp({
           </form>
         </main>
 
-        <aside className="detail">
+        <aside className="detail" id="selected-panel">
           {selected ? (
             <section className="selected-card">
               <p className="bubble-kicker">Карточка новости</p>

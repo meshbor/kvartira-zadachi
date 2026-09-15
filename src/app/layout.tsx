@@ -12,6 +12,12 @@ const sourceSerif = Source_Serif_4({
   subsets: ["cyrillic", "latin"],
 });
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover" as const,
+};
+
 export const metadata: Metadata = {
   title: "Семейный стол — дайджесты и нацпроекты",
   description:

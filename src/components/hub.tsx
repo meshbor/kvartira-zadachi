@@ -8,9 +8,9 @@ import type { FamilyDigestResponse } from "@/lib/family/types";
 import type { DigestResponse } from "@/lib/news/types";
 
 const TABS = [
-  { id: "family", label: "Многодетные" },
-  { id: "spaces", label: "Новые пространства" },
-  { id: "projects", label: "Нацпроекты" },
+  { id: "family", label: "Многодетные", short: "Семья" },
+  { id: "spaces", label: "Новые пространства", short: "Прогулки" },
+  { id: "projects", label: "Нацпроекты", short: "Нацпроекты" },
 ] as const;
 
 export type HubTab = (typeof TABS)[number]["id"];
@@ -59,7 +59,14 @@ export function Hub({
               className={tab === item.id ? "is-active" : undefined}
               onClick={() => openTab(item.id)}
             >
-              {item.label}
+              {item.label === item.short ? (
+                item.label
+              ) : (
+                <>
+                  <span className="tab-full">{item.label}</span>
+                  <span className="tab-short">{item.short}</span>
+                </>
+              )}
             </button>
           ))}
         </div>

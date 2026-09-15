@@ -9,6 +9,7 @@ import {
   type NationalProject,
   type ProjectGroupId,
 } from "@/lib/projects/data";
+import { BUDGET_NOTE, budgetFor, formatBillionRub } from "@/lib/projects/budget";
 import { filterProjects } from "@/lib/projects/search";
 
 export function NationalProjectsApp() {
@@ -40,7 +41,7 @@ export function NationalProjectsApp() {
         <aside className="rail">
           <section>
             <h2>Национальные цели</h2>
-            <div className="chip-list">
+            <div className="chip-list scroll-chips">
               <button
                 type="button"
                 className={group === "all" ? "is-active" : undefined}
@@ -89,24 +90,30 @@ export function NationalProjectsApp() {
               <p className="summary">
                 {filtered.length
                   ? `Показали ${filtered.length} из ${NATIONAL_PROJECTS.length}.`
-                  : "Ничего не нашлось. Сбросьте поиск или выберите другую цель."}
+                  : "Ничего не нашлось. Сбросьте поиск или выберите другую цель."}{" "}
+                {BUDGET_NOTE}
               </p>
               <div className="news-list">
-                {filtered.map((project) => (
-                  <button
-                    key={project.id}
-                    type="button"
-                    className={project.id === selected?.id ? "news-card active" : "news-card"}
-                    onClick={() => setSelectedId(project.id)}
-                  >
-                    <div className="news-meta">
-                      <span className="fresh">{groupLabel(project.group)}</span>
-                      <span>{project.agency}</span>
-                    </div>
-                    <strong>{project.title}</strong>
-                    <p>{project.goal}</p>
-                  </button>
-                ))}
+                {filtered.map((project) => {
+                  const budget = budgetFor(project.id);
+                  return (
+                    <button
+                      key={project.id}
+                      type="button"
+                      className={project.id === selected?.id ? "news-card active" : "news-card"}
+                      onClick={() => setSelectedId(project.id)}
+                    >
+                      <div className="news-meta">
+                        <span className="fresh">{groupLabel(project.group)}</span>
+                        {budget ? (
+                          <span className="budget-pill">{formatBillionRub(budget.totalBillion)}</span>
+                        ) : null}
+                      </div>
+                      <strong>{project.title}</strong>
+                      <p>{project.goal}</p>
+                    </button>
+                  );
+                })}
               </div>
             </article>
           </div>
@@ -144,12 +151,35 @@ function groupLabel(id: ProjectGroupId) {
 }
 
 function ProjectCard({ project }: { project: NationalProject }) {
+  const budget = budgetFor(project.id);
   return (
-    <section className="selected-card">
+    <section className="selected-card" id="selected-panel">
       <p className="bubble-kicker">{groupLabel(project.group)}</p>
       <h2>{project.title}</h2>
       <p className="why">{project.goal}</p>
       <dl>
+        <div>
+          <dt>Общий бюджет</dt>
+          <dd>
+            {budget ? formatBillionRub(budget.totalBillion) : "не опубликован"}
+            {budget?.federalBillion != null || budget?.extraBillion ? (
+              <span className="budget-split">
+                {budget.federalBillion
+                  ? ` ФБ ${formatBillionRub(budget.federalBillion)}`
+                  : ""}
+                {budget.extraBillion
+                  ? ` · внебюджет ${formatBillionRub(budget.extraBillion)}`
+                  : ""}
+              </span>
+            ) : null}
+          </dd>
+        </div>
+        {budget ? (
+          <div>
+            <dt>Откуда цифра</dt>
+            <dd>{budget.source}</dd>
+          </div>
+        ) : null}
         <div>
           <dt>Куратор в Правительстве</dt>
           <dd>{project.curator}</dd>

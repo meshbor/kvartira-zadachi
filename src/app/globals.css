@@ -428,26 +428,172 @@ body {
   color: var(--muted);
 }
 
+.budget-pill {
+  margin-left: auto;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: #e7f0e6;
+  color: var(--leaf-deep);
+  font-weight: 700;
+}
+
+.budget-split {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.tab-short {
+  display: none;
+}
+
 @media (max-width: 1100px) {
-  .workspace {
-    grid-template-columns: 1fr;
+  .app-shell {
+    padding: 10px 10px 18px;
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
+  }
+
+  .section-shell {
+    min-height: 0;
   }
 
   .site-tabs {
+    position: sticky;
+    top: 8px;
+    z-index: 30;
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 18px;
+    margin-bottom: 10px;
   }
 
-  .rail {
+  .site-brand strong {
+    font-size: 18px;
+  }
+
+  .tab-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+  }
+
+  .tab-list button {
+    width: 100%;
+    justify-content: center;
+    padding: 11px 6px;
+    font-size: 13px;
+    min-height: 44px;
+  }
+
+  .tab-full {
     display: none;
   }
 
-  .detail:not(.keep-on-mobile) {
+  .tab-short {
+    display: inline;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .topbar h1 {
+    font-size: 26px;
+  }
+
+  .topbar-meta {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .ghost-button {
+    min-height: 44px;
+  }
+
+  .workspace {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 10px;
+    min-height: 0;
+    padding: 8px;
+    border-radius: 18px;
+  }
+
+  .rail,
+  .detail,
+  .detail.keep-on-mobile {
+    display: flex;
+    padding: 0;
+  }
+
+  .scroll-chips {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  .scroll-chips::-webkit-scrollbar {
     display: none;
+  }
+
+  .chip-list button,
+  .district-list button {
+    width: auto;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    min-height: 44px;
+    gap: 10px;
   }
 
   .chat-panel {
-    min-height: 70vh;
+    min-height: 58vh;
+  }
+
+  .thread {
+    padding: 12px 10px 8px;
+  }
+
+  .bubble {
+    max-width: 100%;
+  }
+
+  .composer {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  .composer input,
+  .composer button {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .selected-card h2 {
+    font-size: 22px;
+  }
+
+  .news-meta {
+    flex-wrap: wrap;
+  }
+
+  .maps h2,
+  .rail h2 {
+    font-size: 15px;
   }
 }
 

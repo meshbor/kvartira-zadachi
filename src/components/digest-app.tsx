@@ -125,7 +125,7 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
         <aside className="rail">
           <section>
             <h2>Темы утра</h2>
-            <div className="chip-list">
+            <div className="chip-list scroll-chips">
               {TOPIC_CHIPS.map((chip) => (
                 <button key={chip.query} type="button" onClick={() => ask(chip.query)}>
                   {chip.label}
@@ -137,7 +137,7 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
 
           <section>
             <h2>Районы</h2>
-            <div className="district-list">
+            <div className="district-list scroll-chips">
               {DISTRICTS.map((district) => {
                 const count = visibleItems.filter((item) =>
                   item.districts.includes(district),
@@ -222,7 +222,7 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
           </form>
         </main>
 
-        <aside className="detail">
+        <aside className="detail" id="selected-panel">
           {selected ? (
             <SelectedCard item={selected} />
           ) : (
