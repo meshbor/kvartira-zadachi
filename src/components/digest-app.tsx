@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { MobileSheet } from "@/components/mobile-sheet";
 import { filterItems } from "@/lib/news/filter";
 import { CATEGORY_LABELS, FRESHNESS_LABELS, formatPublishedAt } from "@/lib/labels";
 import { DISTRICTS } from "@/lib/news/districts";
@@ -63,6 +64,7 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
   const [selected, setSelected] = useState<NewsItem | null>(
     initialDigest.items[0] ?? null,
   );
+  const [sheetOpen, setSheetOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const threadRef = useRef<HTMLDivElement>(null);
@@ -77,6 +79,7 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
       setDigest(data);
       setMessages([{ id: uid(), role: "assistant", kind: "intro", digest: data }]);
       setSelected(data.items[0] ?? null);
+      setSheetOpen(false);
     } catch {
       setError("Не получилось загрузить утреннюю ленту. Проверьте сеть и обновите.");
     } finally {
@@ -102,6 +105,11 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
     ]);
     setSelected(items[0] ?? selected);
     setQuery("");
+  }
+
+  function openItem(item: NewsItem) {
+    setSelected(item);
+    setSheetOpen(true);
   }
 
   const visibleItems = useMemo(() => digest.items, [digest]);
@@ -187,7 +195,7 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
                   <IntroBubble
                     key={message.id}
                     digest={message.digest}
-                    onOpen={setSelected}
+                    onOpen={openItem}
                     selectedId={selected?.id}
                   />
                 );
@@ -198,7 +206,7 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
                   key={message.id}
                   query={message.query}
                   items={message.items}
-                  onOpen={setSelected}
+                  onOpen={openItem}
                   selectedId={selected?.id}
                 />
               );
@@ -223,13 +231,15 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
         </main>
 
         <aside className="detail keep-on-mobile" id="selected-panel">
-          {selected ? (
-            <SelectedCard item={selected} />
-          ) : (
-            <div className="empty-detail">
-              <p>Выберите новость в списке — откроется карточка с источником и районом.</p>
-            </div>
-          )}
+          <div className="desktop-only-detail">
+            {selected ? (
+              <SelectedCard item={selected} />
+            ) : (
+              <div className="empty-detail">
+                <p>Выберите новость в списке — откроется карточка с источником и районом.</p>
+              </div>
+            )}
+          </div>
 
           <section className="maps">
             <h2>Куда посмотреть карту</h2>
@@ -242,6 +252,14 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
           </section>
         </aside>
       </div>
+
+      <MobileSheet
+        open={sheetOpen && Boolean(selected)}
+        onClose={() => setSheetOpen(false)}
+        title="Карточка места"
+      >
+        {selected ? <SelectedCard item={selected} /> : null}
+      </MobileSheet>
     </div>
   );
 }
@@ -311,6 +329,7 @@ function NewsList({
           type="button"
           className={item.id === selectedId ? "news-card active" : "news-card"}
           onClick={() => onOpen(item)}
+          aria-haspopup="dialog"
         >
           <div className="news-meta">
             <span className={`fresh ${item.freshness}`}>{FRESHNESS_LABELS[item.freshness]}</span>

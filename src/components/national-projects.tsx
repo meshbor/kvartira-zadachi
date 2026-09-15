@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { MobileSheet } from "@/components/mobile-sheet";
 import {
   NATIONAL_PROJECTS,
   PROJECT_GROUPS,
@@ -16,6 +17,7 @@ export function NationalProjectsApp() {
   const [query, setQuery] = useState("");
   const [group, setGroup] = useState<ProjectGroupId | "all">("all");
   const [selectedId, setSelectedId] = useState(NATIONAL_PROJECTS[0].id);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   const filtered = useMemo(
     () => filterProjects(query, group),
@@ -101,7 +103,11 @@ export function NationalProjectsApp() {
                       key={project.id}
                       type="button"
                       className={project.id === selected?.id ? "news-card active" : "news-card"}
-                      onClick={() => setSelectedId(project.id)}
+                      onClick={() => {
+                        setSelectedId(project.id);
+                        setSheetOpen(true);
+                      }}
+                      aria-haspopup="dialog"
                     >
                       <div className="news-meta">
                         <span className="fresh">{groupLabel(project.group)}</span>
@@ -120,11 +126,13 @@ export function NationalProjectsApp() {
         </main>
 
         <aside className="detail keep-on-mobile">
-          {selected ? <ProjectCard project={selected} /> : (
-            <div className="empty-detail">
-              <p>Выберите проект в списке — откроется карточка.</p>
-            </div>
-          )}
+          <div className="desktop-only-detail">
+            {selected ? <ProjectCard project={selected} /> : (
+              <div className="empty-detail">
+                <p>Выберите проект в списке — откроется карточка.</p>
+              </div>
+            )}
+          </div>
           <section className="maps">
             <h2>Источники</h2>
             {PROJECT_SOURCES.map((link) => (
@@ -142,6 +150,14 @@ export function NationalProjectsApp() {
           </section>
         </aside>
       </div>
+
+      <MobileSheet
+        open={sheetOpen && Boolean(selected)}
+        onClose={() => setSheetOpen(false)}
+        title="Карточка проекта"
+      >
+        {selected ? <ProjectCard project={selected} /> : null}
+      </MobileSheet>
     </div>
   );
 }
@@ -153,7 +169,7 @@ function groupLabel(id: ProjectGroupId) {
 function ProjectCard({ project }: { project: NationalProject }) {
   const budget = budgetFor(project.id);
   return (
-    <section className="selected-card" id="selected-panel">
+    <section className="selected-card">
       <p className="bubble-kicker">{groupLabel(project.group)}</p>
       <h2>{project.title}</h2>
       <p className="why">{project.goal}</p>

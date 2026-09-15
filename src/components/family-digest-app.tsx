@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { MobileSheet } from "@/components/mobile-sheet";
 import { filterFamilyItems } from "@/lib/family/filter";
 import { FAMILY_CATEGORY_LABELS, FRESHNESS_LABELS, formatPublishedAt } from "@/lib/labels";
 import type { FamilyCategory, FamilyDigestResponse, FamilyNewsItem } from "@/lib/family/types";
@@ -59,6 +60,7 @@ export function FamilyDigestApp({
   const [selected, setSelected] = useState<FamilyNewsItem | null>(
     initialDigest.items[0] ?? null,
   );
+  const [sheetOpen, setSheetOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const threadRef = useRef<HTMLDivElement>(null);
@@ -73,6 +75,7 @@ export function FamilyDigestApp({
       setDigest(data);
       setMessages([{ id: uid(), role: "assistant", kind: "intro", digest: data }]);
       setSelected(data.items[0] ?? null);
+      setSheetOpen(false);
     } catch {
       setError("Не получилось загрузить утреннюю ленту. Проверьте сеть и обновите.");
     } finally {
@@ -98,6 +101,11 @@ export function FamilyDigestApp({
     ]);
     setSelected(items[0] ?? selected);
     setQuery("");
+  }
+
+  function openItem(item: FamilyNewsItem) {
+    setSelected(item);
+    setSheetOpen(true);
   }
 
   return (
@@ -171,7 +179,7 @@ export function FamilyDigestApp({
                     ) : null}
                     <FamilyNewsList
                       items={message.digest.items.slice(0, 8)}
-                      onOpen={setSelected}
+                      onOpen={openItem}
                       selectedId={selected?.id}
                     />
                   </article>
@@ -184,7 +192,7 @@ export function FamilyDigestApp({
                   {message.items.length ? (
                     <FamilyNewsList
                       items={message.items}
-                      onOpen={setSelected}
+                      onOpen={openItem}
                       selectedId={selected?.id}
                     />
                   ) : (
@@ -213,35 +221,15 @@ export function FamilyDigestApp({
         </main>
 
         <aside className="detail keep-on-mobile" id="selected-panel">
-          {selected ? (
-            <section className="selected-card">
-              <p className="bubble-kicker">Карточка новости</p>
-              <h2>{selected.title}</h2>
-              <p className="why">{selected.why}</p>
-              {selected.excerpt ? <p>{selected.excerpt}</p> : null}
-              <dl>
-                <div>
-                  <dt>Когда писали</dt>
-                  <dd>{formatPublishedAt(selected.publishedAt)}</dd>
-                </div>
-                <div>
-                  <dt>Источник</dt>
-                  <dd>{selected.source}</dd>
-                </div>
-                <div>
-                  <dt>Тема</dt>
-                  <dd>{FAMILY_CATEGORY_LABELS[selected.category]}</dd>
-                </div>
-              </dl>
-              <a className="open-source" href={selected.url} target="_blank" rel="noreferrer">
-                Открыть новость
-              </a>
-            </section>
-          ) : (
-            <div className="empty-detail">
-              <p>Выберите новость в списке — откроется карточка с источником.</p>
-            </div>
-          )}
+          <div className="desktop-only-detail">
+            {selected ? (
+              <FamilySelectedCard item={selected} />
+            ) : (
+              <div className="empty-detail">
+                <p>Выберите новость в списке — откроется карточка с источником.</p>
+              </div>
+            )}
+          </div>
 
           <section className="maps">
             <h2>Куда сходить за справкой</h2>
@@ -254,6 +242,14 @@ export function FamilyDigestApp({
           </section>
         </aside>
       </div>
+
+      <MobileSheet
+        open={sheetOpen && Boolean(selected)}
+        onClose={() => setSheetOpen(false)}
+        title="Карточка новости"
+      >
+        {selected ? <FamilySelectedCard item={selected} /> : null}
+      </MobileSheet>
     </div>
   );
 }
@@ -275,6 +271,7 @@ function FamilyNewsList({
           type="button"
           className={item.id === selectedId ? "news-card active" : "news-card"}
           onClick={() => onOpen(item)}
+          aria-haspopup="dialog"
         >
           <div className="news-meta">
             <span className={`fresh ${item.freshness}`}>{FRESHNESS_LABELS[item.freshness]}</span>
@@ -285,5 +282,33 @@ function FamilyNewsList({
         </button>
       ))}
     </div>
+  );
+}
+
+function FamilySelectedCard({ item }: { item: FamilyNewsItem }) {
+  return (
+    <section className="selected-card">
+      <p className="bubble-kicker">Карточка новости</p>
+      <h2>{item.title}</h2>
+      <p className="why">{item.why}</p>
+      {item.excerpt ? <p>{item.excerpt}</p> : null}
+      <dl>
+        <div>
+          <dt>Когда писали</dt>
+          <dd>{formatPublishedAt(item.publishedAt)}</dd>
+        </div>
+        <div>
+          <dt>Источник</dt>
+          <dd>{item.source}</dd>
+        </div>
+        <div>
+          <dt>Тема</dt>
+          <dd>{FAMILY_CATEGORY_LABELS[item.category]}</dd>
+        </div>
+      </dl>
+      <a className="open-source" href={item.url} target="_blank" rel="noreferrer">
+        Открыть новость
+      </a>
+    </section>
   );
 }
