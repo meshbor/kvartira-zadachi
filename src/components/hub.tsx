@@ -45,10 +45,7 @@ export function Hub({
   return (
     <div className="app-shell">
       <nav className="site-tabs" aria-label="Разделы">
-        <div className="site-brand">
-          <p>Одно место</p>
-          <strong>Семейный стол</strong>
-        </div>
+        <strong className="site-brand">digest</strong>
         <div className="tab-list" role="tablist">
           {TABS.map((item) => (
             <button

@@ -4,6 +4,16 @@ export const FAMILY_GOOGLE_QUERIES = [
   { id: "family-mortgage", query: "семейная ипотека многодетные" },
   { id: "unified-benefit", query: "единое пособие семьи" },
   { id: "family-status", query: "статус многодетной семьи" },
+  {
+    id: "spb-family",
+    query:
+      'многодетные (Санкт-Петербург OR Петербург OR "Ленинградская область" OR Ленобласть)',
+  },
+  {
+    id: "spb-payments",
+    query:
+      '(материнский капитал OR "единое пособие" OR "семейная ипотека") (Санкт-Петербург OR Петербург OR Ленобласть)',
+  },
 ] as const;
 
 export const FAMILY_RSS_FEEDS = [

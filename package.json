@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx --test src/lib/news/*.test.ts src/lib/family/*.test.ts src/lib/projects/*.test.ts"
+    "test": "tsx --test src/lib/news/*.test.ts src/lib/family/*.test.ts src/lib/projects/*.test.ts src/lib/region.test.ts"
   },
   "dependencies": {
     "next": "16.3.5",

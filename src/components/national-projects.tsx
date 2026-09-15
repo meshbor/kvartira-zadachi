@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { DigestToolbar } from "@/components/digest-toolbar";
+import { MobileSheet } from "@/components/mobile-sheet";
 import {
   NATIONAL_PROJECTS,
   PROJECT_GROUPS,
@@ -9,13 +11,14 @@ import {
   type NationalProject,
   type ProjectGroupId,
 } from "@/lib/projects/data";
-import { BUDGET_NOTE, budgetFor, formatBillionRub } from "@/lib/projects/budget";
+import { budgetFor, formatBillionRub } from "@/lib/projects/budget";
 import { filterProjects } from "@/lib/projects/search";
 
 export function NationalProjectsApp() {
   const [query, setQuery] = useState("");
   const [group, setGroup] = useState<ProjectGroupId | "all">("all");
   const [selectedId, setSelectedId] = useState(NATIONAL_PROJECTS[0].id);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   const filtered = useMemo(
     () => filterProjects(query, group),
@@ -27,20 +30,11 @@ export function NationalProjectsApp() {
 
   return (
     <div className="section-shell">
-      <header className="topbar">
-        <div>
-          <p className="eyebrow">2025–2030 · 20 нацпроектов, без IT-идей пока</p>
-          <h1>Национальные проекты</h1>
-        </div>
-        <div className="topbar-meta">
-          <span>{NATIONAL_PROJECTS.length} проектов</span>
-        </div>
-      </header>
+      <DigestToolbar description="Нацпроекты 2025–2030, 20 штук" />
 
       <div className="workspace">
         <aside className="rail">
           <section>
-            <h2>Национальные цели</h2>
             <div className="chip-list scroll-chips">
               <button
                 type="button"
@@ -80,19 +74,7 @@ export function NationalProjectsApp() {
             />
           </form>
           <div className="thread">
-            <article className="bubble assistant">
-              <p className="bubble-kicker">Структурированный список</p>
-              <p>
-                Собрали новые нацпроекты цикла 2025–2030: цель, федеральные проекты внутри,
-                ключевые меры и крючки для IT. Идеи сервисов — следующим шагом, сейчас только
-                карта поля.
-              </p>
-              <p className="summary">
-                {filtered.length
-                  ? `Показали ${filtered.length} из ${NATIONAL_PROJECTS.length}.`
-                  : "Ничего не нашлось. Сбросьте поиск или выберите другую цель."}{" "}
-                {BUDGET_NOTE}
-              </p>
+            {filtered.length ? (
               <div className="news-list">
                 {filtered.map((project) => {
                   const budget = budgetFor(project.id);
@@ -101,7 +83,11 @@ export function NationalProjectsApp() {
                       key={project.id}
                       type="button"
                       className={project.id === selected?.id ? "news-card active" : "news-card"}
-                      onClick={() => setSelectedId(project.id)}
+                      onClick={() => {
+                        setSelectedId(project.id);
+                        setSheetOpen(true);
+                      }}
+                      aria-haspopup="dialog"
                     >
                       <div className="news-meta">
                         <span className="fresh">{groupLabel(project.group)}</span>
@@ -115,16 +101,22 @@ export function NationalProjectsApp() {
                   );
                 })}
               </div>
-            </article>
+            ) : (
+              <p className="muted feed-status">
+                Ничего не нашлось. Сбросьте поиск или выберите другую цель.
+              </p>
+            )}
           </div>
         </main>
 
         <aside className="detail keep-on-mobile">
-          {selected ? <ProjectCard project={selected} /> : (
-            <div className="empty-detail">
-              <p>Выберите проект в списке — откроется карточка.</p>
-            </div>
-          )}
+          <div className="desktop-only-detail">
+            {selected ? <ProjectCard project={selected} /> : (
+              <div className="empty-detail">
+                <p>Выберите проект в списке — откроется карточка.</p>
+              </div>
+            )}
+          </div>
           <section className="maps">
             <h2>Источники</h2>
             {PROJECT_SOURCES.map((link) => (
@@ -142,6 +134,14 @@ export function NationalProjectsApp() {
           </section>
         </aside>
       </div>
+
+      <MobileSheet
+        open={sheetOpen && Boolean(selected)}
+        onClose={() => setSheetOpen(false)}
+        title="Карточка проекта"
+      >
+        {selected ? <ProjectCard project={selected} /> : null}
+      </MobileSheet>
     </div>
   );
 }
@@ -153,7 +153,7 @@ function groupLabel(id: ProjectGroupId) {
 function ProjectCard({ project }: { project: NationalProject }) {
   const budget = budgetFor(project.id);
   return (
-    <section className="selected-card" id="selected-panel">
+    <section className="selected-card">
       <p className="bubble-kicker">{groupLabel(project.group)}</p>
       <h2>{project.title}</h2>
       <p className="why">{project.goal}</p>
