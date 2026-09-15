@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { DigestToolbar } from "@/components/digest-toolbar";
 import { MobileSheet } from "@/components/mobile-sheet";
 import { filterItems } from "@/lib/news/filter";
 import { CATEGORY_LABELS, FRESHNESS_LABELS, formatPublishedAt } from "@/lib/labels";
 import { DISTRICTS } from "@/lib/news/districts";
+import { itemMentionsSpbLenobl } from "@/lib/region";
 import type { Category, DigestResponse, NewsItem } from "@/lib/news/types";
 
 type ChatMessage =
@@ -49,10 +51,10 @@ const TOPIC_COUNTS: Record<string, Category> = {
   набережные: "embankment",
 };
 
-function topicCount(query: string, digest: DigestResponse) {
-  if (query.includes("свеж")) return digest.freshCount;
+function topicCount(query: string, items: NewsItem[], freshCount: number) {
+  if (query.includes("свеж")) return freshCount;
   const category = TOPIC_COUNTS[query];
-  return category ? digest.counts[category] : 0;
+  return category ? items.filter((item) => item.categories.includes(category)).length : 0;
 }
 
 export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) {
@@ -65,6 +67,7 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
     initialDigest.items[0] ?? null,
   );
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [regionOn, setRegionOn] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const threadRef = useRef<HTMLDivElement>(null);
@@ -88,6 +91,7 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
   }
 
   useEffect(() => {
+    if (messages.length <= 1) return;
     threadRef.current?.scrollTo({
       top: threadRef.current.scrollHeight,
       behavior: "smooth",
@@ -97,7 +101,7 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
   function ask(text: string) {
     const trimmed = text.trim();
     if (!trimmed) return;
-    const items = filterItems(digest.items, trimmed);
+    const items = filterItems(regionalItems, trimmed);
     setMessages((current) => [
       ...current,
       { id: uid(), role: "user", text: trimmed },
@@ -112,39 +116,48 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
     setSheetOpen(true);
   }
 
-  const visibleItems = useMemo(() => digest.items, [digest]);
+  function toggleRegion() {
+    setRegionOn((current) => !current);
+    setMessages([{ id: "intro", role: "assistant", kind: "intro", digest }]);
+  }
+
+  const regionalItems = regionOn
+    ? digest.items.filter((item) => itemMentionsSpbLenobl(item))
+    : digest.items;
+
+  const visibleItems = regionalItems;
 
   return (
     <div className="section-shell">
-      <header className="topbar">
-        <div>
-          <p className="eyebrow">Новые пространства · парки, дворы, площадки Петербурга</p>
-          <h1>Гуляй, СПб</h1>
-        </div>
-        <div className="topbar-meta">
-          <span>{digest.todayLabel}</span>
-          <button type="button" className="ghost-button" onClick={() => void loadDigest()}>
-            Обновить ленту
-          </button>
-        </div>
-      </header>
+      <DigestToolbar
+        description="Парки, дворы и площадки Петербурга"
+        regionOn={regionOn}
+        onRegionToggle={toggleRegion}
+        onRefresh={() => void loadDigest()}
+      />
 
       <div className="workspace">
         <aside className="rail">
           <section>
-            <h2>Темы утра</h2>
             <div className="chip-list scroll-chips">
               {TOPIC_CHIPS.map((chip) => (
                 <button key={chip.query} type="button" onClick={() => ask(chip.query)}>
                   {chip.label}
-                  <em>{topicCount(chip.query, digest)}</em>
+                  <em>
+                    {topicCount(
+                      chip.query,
+                      regionalItems,
+                      regionalItems.filter(
+                        (item) => item.freshness === "today" || item.freshness === "yesterday",
+                      ).length,
+                    )}
+                  </em>
                 </button>
               ))}
             </div>
           </section>
 
-          <section>
-            <h2>Районы</h2>
+          <section className="district-block">
             <div className="district-list scroll-chips">
               {DISTRICTS.map((district) => {
                 const count = visibleItems.filter((item) =>
@@ -168,12 +181,7 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
 
         <main className="chat-panel">
           <div className="thread" ref={threadRef}>
-            {loading ? (
-              <article className="bubble assistant">
-                <p className="bubble-kicker">Утренний сбор</p>
-                <p>Собираю, что нового появилось в парках, дворах и на площадках Петербурга…</p>
-              </article>
-            ) : null}
+            {loading ? <p className="muted feed-status">Обновляю ленту…</p> : null}
 
             {error ? (
               <article className="bubble assistant warning">
@@ -191,10 +199,19 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
               }
 
               if (message.kind === "intro") {
+                if (!regionalItems.length) {
+                  return (
+                    <p key={message.id} className="muted feed-status">
+                      {regionOn
+                        ? "По СПб и Ленобласти пока пусто. Снимите фильтр или обновите."
+                        : "Пока нет свежих новостей."}
+                    </p>
+                  );
+                }
                 return (
-                  <IntroBubble
+                  <NewsList
                     key={message.id}
-                    digest={message.digest}
+                    items={regionalItems}
                     onOpen={openItem}
                     selectedId={selected?.id}
                   />
@@ -261,31 +278,6 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
         {selected ? <SelectedCard item={selected} /> : null}
       </MobileSheet>
     </div>
-  );
-}
-
-function IntroBubble({
-  digest,
-  onOpen,
-  selectedId,
-}: {
-  digest: DigestResponse;
-  onOpen: (item: NewsItem) => void;
-  selectedId?: string;
-}) {
-  return (
-    <article className="bubble assistant">
-      <p className="bubble-kicker">{digest.greeting}</p>
-      <p>
-        Собрали актуальное по Петербургу: парки, общественные пространства, дворы и места, где
-        можно выгулять детей.
-      </p>
-      <p className="summary">{digest.summary}</p>
-      {digest.warnings.length ? (
-        <p className="muted">Часть лент не открылась: {digest.warnings.join(" · ")}</p>
-      ) : null}
-      <NewsList items={digest.items.slice(0, 8)} onOpen={onOpen} selectedId={selectedId} />
-    </article>
   );
 }
 

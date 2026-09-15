@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { DigestToolbar } from "@/components/digest-toolbar";
 import { MobileSheet } from "@/components/mobile-sheet";
 import {
   NATIONAL_PROJECTS,
@@ -10,7 +11,7 @@ import {
   type NationalProject,
   type ProjectGroupId,
 } from "@/lib/projects/data";
-import { BUDGET_NOTE, budgetFor, formatBillionRub } from "@/lib/projects/budget";
+import { budgetFor, formatBillionRub } from "@/lib/projects/budget";
 import { filterProjects } from "@/lib/projects/search";
 
 export function NationalProjectsApp() {
@@ -29,20 +30,11 @@ export function NationalProjectsApp() {
 
   return (
     <div className="section-shell">
-      <header className="topbar">
-        <div>
-          <p className="eyebrow">2025–2030 · 20 нацпроектов, без IT-идей пока</p>
-          <h1>Национальные проекты</h1>
-        </div>
-        <div className="topbar-meta">
-          <span>{NATIONAL_PROJECTS.length} проектов</span>
-        </div>
-      </header>
+      <DigestToolbar description="Нацпроекты 2025–2030, 20 штук" />
 
       <div className="workspace">
         <aside className="rail">
           <section>
-            <h2>Национальные цели</h2>
             <div className="chip-list scroll-chips">
               <button
                 type="button"
@@ -82,19 +74,7 @@ export function NationalProjectsApp() {
             />
           </form>
           <div className="thread">
-            <article className="bubble assistant">
-              <p className="bubble-kicker">Структурированный список</p>
-              <p>
-                Собрали новые нацпроекты цикла 2025–2030: цель, федеральные проекты внутри,
-                ключевые меры и крючки для IT. Идеи сервисов — следующим шагом, сейчас только
-                карта поля.
-              </p>
-              <p className="summary">
-                {filtered.length
-                  ? `Показали ${filtered.length} из ${NATIONAL_PROJECTS.length}.`
-                  : "Ничего не нашлось. Сбросьте поиск или выберите другую цель."}{" "}
-                {BUDGET_NOTE}
-              </p>
+            {filtered.length ? (
               <div className="news-list">
                 {filtered.map((project) => {
                   const budget = budgetFor(project.id);
@@ -121,7 +101,11 @@ export function NationalProjectsApp() {
                   );
                 })}
               </div>
-            </article>
+            ) : (
+              <p className="muted feed-status">
+                Ничего не нашлось. Сбросьте поиск или выберите другую цель.
+              </p>
+            )}
           </div>
         </main>
 

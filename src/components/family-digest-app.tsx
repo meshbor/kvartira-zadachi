@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { DigestToolbar } from "@/components/digest-toolbar";
 import { MobileSheet } from "@/components/mobile-sheet";
 import { filterFamilyItems } from "@/lib/family/filter";
 import { FAMILY_CATEGORY_LABELS, FRESHNESS_LABELS, formatPublishedAt } from "@/lib/labels";
+import { itemMentionsSpbLenobl } from "@/lib/region";
 import type { FamilyCategory, FamilyDigestResponse, FamilyNewsItem } from "@/lib/family/types";
 
 type ChatMessage =
@@ -61,6 +63,7 @@ export function FamilyDigestApp({
     initialDigest.items[0] ?? null,
   );
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [regionOn, setRegionOn] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const threadRef = useRef<HTMLDivElement>(null);
@@ -84,16 +87,31 @@ export function FamilyDigestApp({
   }
 
   useEffect(() => {
+    if (messages.length <= 1) return;
     threadRef.current?.scrollTo({
       top: threadRef.current.scrollHeight,
       behavior: "smooth",
     });
   }, [messages, loading]);
 
+  const regionalItems = regionOn
+    ? digest.items.filter((item) => itemMentionsSpbLenobl(item))
+    : digest.items;
+
+  const counts = useMemo(() => {
+    const next = { housing: 0, payments: 0, school: 0, family: 0 };
+    for (const item of regionalItems) next[item.category] += 1;
+    return next;
+  }, [regionalItems]);
+
+  const freshCount = regionalItems.filter(
+    (item) => item.freshness === "today" || item.freshness === "yesterday",
+  ).length;
+
   function ask(text: string) {
     const trimmed = text.trim();
     if (!trimmed) return;
-    const items = filterFamilyItems(digest.items, trimmed);
+    const items = filterFamilyItems(regionalItems, trimmed);
     setMessages((current) => [
       ...current,
       { id: uid(), role: "user", text: trimmed },
@@ -108,31 +126,29 @@ export function FamilyDigestApp({
     setSheetOpen(true);
   }
 
+  function toggleRegion() {
+    setRegionOn((current) => !current);
+    setMessages([{ id: "intro", role: "assistant", kind: "intro", digest }]);
+  }
+
   return (
     <div className="section-shell">
-      <header className="topbar">
-        <div>
-          <p className="eyebrow">Многодетные · выплаты, жильё, льготы</p>
-          <h1>Семейные новости</h1>
-        </div>
-        <div className="topbar-meta">
-          <span>{digest.todayLabel}</span>
-          <button type="button" className="ghost-button" onClick={() => void loadDigest()}>
-            Обновить ленту
-          </button>
-        </div>
-      </header>
+      <DigestToolbar
+        description="Многодетные: выплаты, жильё, льготы"
+        regionOn={regionOn}
+        onRegionToggle={toggleRegion}
+        onRefresh={() => void loadDigest()}
+      />
 
       <div className="workspace">
         <aside className="rail">
           <section>
-            <h2>Темы утра</h2>
             <div className="chip-list scroll-chips">
               {TOPIC_CHIPS.map((chip) => (
                 <button key={chip.query} type="button" onClick={() => ask(chip.query)}>
                   {chip.label}
                   <em>
-                    {chip.category ? digest.counts[chip.category] : digest.freshCount}
+                    {chip.category ? counts[chip.category] : freshCount}
                   </em>
                 </button>
               ))}
@@ -142,12 +158,7 @@ export function FamilyDigestApp({
 
         <main className="chat-panel">
           <div className="thread" ref={threadRef}>
-            {loading ? (
-              <article className="bubble assistant">
-                <p className="bubble-kicker">Утренний сбор</p>
-                <p>Собираю новости про многодетных, выплаты и жильё…</p>
-              </article>
-            ) : null}
+            {loading ? <p className="muted feed-status">Обновляю ленту…</p> : null}
 
             {error ? (
               <article className="bubble assistant warning">
@@ -165,30 +176,28 @@ export function FamilyDigestApp({
               }
 
               if (message.kind === "intro") {
-                return (
-                  <article key={message.id} className="bubble assistant">
-                    <p className="bubble-kicker">{message.digest.greeting}</p>
-                    <p>
-                      Собрали свежее по многодетным семьям: жильё, выплаты, сад, школа и льготы.
+                if (!regionalItems.length) {
+                  return (
+                    <p key={message.id} className="muted feed-status">
+                      {regionOn
+                        ? "По СПб и Ленобласти пока пусто. Снимите фильтр или обновите."
+                        : "Пока нет свежих новостей."}
                     </p>
-                    <p className="summary">{message.digest.summary}</p>
-                    {message.digest.warnings.length ? (
-                      <p className="muted">
-                        Часть лент не открылась: {message.digest.warnings.join(" · ")}
-                      </p>
-                    ) : null}
-                    <FamilyNewsList
-                      items={message.digest.items.slice(0, 8)}
-                      onOpen={openItem}
-                      selectedId={selected?.id}
-                    />
-                  </article>
+                  );
+                }
+                return (
+                  <FamilyNewsList
+                    key={message.id}
+                    items={regionalItems}
+                    onOpen={openItem}
+                    selectedId={selected?.id}
+                  />
                 );
               }
 
               return (
                 <article key={message.id} className="bubble assistant">
-                  <p className="bubble-kicker">По запросу «{message.query}»</p>
+                  <p className="bubble-kicker">«{message.query}»</p>
                   {message.items.length ? (
                     <FamilyNewsList
                       items={message.items}
