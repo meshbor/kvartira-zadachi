@@ -9,30 +9,17 @@ import {
   type NationalProject,
   type ProjectGroupId,
 } from "@/lib/projects/data";
+import { filterProjects } from "@/lib/projects/search";
 
 export function NationalProjectsApp() {
   const [query, setQuery] = useState("");
   const [group, setGroup] = useState<ProjectGroupId | "all">("all");
   const [selectedId, setSelectedId] = useState(NATIONAL_PROJECTS[0].id);
 
-  const filtered = useMemo(() => {
-    const needle = query.trim().toLowerCase();
-    return NATIONAL_PROJECTS.filter((project) => {
-      if (group !== "all" && project.group !== group) return false;
-      if (!needle) return true;
-      const haystack = [
-        project.title,
-        project.goal,
-        project.agency,
-        ...project.federalProjects,
-        ...project.highlights,
-        ...project.itHooks,
-      ]
-        .join(" ")
-        .toLowerCase();
-      return haystack.includes(needle);
-    });
-  }, [group, query]);
+  const filtered = useMemo(
+    () => filterProjects(query, group),
+    [group, query],
+  );
 
   const selected =
     filtered.find((project) => project.id === selectedId) ?? filtered[0] ?? null;
