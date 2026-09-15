@@ -122,7 +122,7 @@ export function NationalProjectsApp() {
         <aside className="detail keep-on-mobile">
           {selected ? <ProjectCard project={selected} /> : (
             <div className="empty-detail">
-              <p>Выберите проект слева — справа откроется карточка.</p>
+              <p>Выберите проект в списке — откроется карточка.</p>
             </div>
           )}
           <section className="maps">

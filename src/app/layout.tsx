@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Nunito, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 
@@ -12,10 +12,12 @@ const sourceSerif = Source_Serif_4({
   subsets: ["cyrillic", "latin"],
 });
 
-export const viewport = {
+export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  viewportFit: "cover" as const,
+  maximumScale: 5,
+  viewportFit: "cover",
+  themeColor: "#f4efe4",
 };
 
 export const metadata: Metadata = {

@@ -222,12 +222,12 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
           </form>
         </main>
 
-        <aside className="detail" id="selected-panel">
+        <aside className="detail keep-on-mobile" id="selected-panel">
           {selected ? (
             <SelectedCard item={selected} />
           ) : (
             <div className="empty-detail">
-              <p>Выберите новость слева — справа откроется карточка с источником и районом.</p>
+              <p>Выберите новость в списке — откроется карточка с источником и районом.</p>
             </div>
           )}
 

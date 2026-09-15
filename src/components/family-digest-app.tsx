@@ -212,7 +212,7 @@ export function FamilyDigestApp({
           </form>
         </main>
 
-        <aside className="detail" id="selected-panel">
+        <aside className="detail keep-on-mobile" id="selected-panel">
           {selected ? (
             <section className="selected-card">
               <p className="bubble-kicker">Карточка новости</p>
@@ -239,7 +239,7 @@ export function FamilyDigestApp({
             </section>
           ) : (
             <div className="empty-detail">
-              <p>Выберите новость слева — справа откроется карточка с источником.</p>
+              <p>Выберите новость в списке — откроется карточка с источником.</p>
             </div>
           )}
 
