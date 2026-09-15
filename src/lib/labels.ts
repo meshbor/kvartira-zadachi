@@ -1,3 +1,4 @@
+import type { FamilyCategory } from "./family/types";
 import type { Category, Freshness } from "./news/types";
 
 export const CATEGORY_LABELS: Record<Category, string> = {
@@ -6,6 +7,13 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   space: "Пространства",
   yard: "Дворы",
   embankment: "Набережные",
+};
+
+export const FAMILY_CATEGORY_LABELS: Record<FamilyCategory, string> = {
+  housing: "Жильё",
+  payments: "Выплаты",
+  school: "Школа и сад",
+  family: "Семья и льготы",
 };
 
 export const FRESHNESS_LABELS: Record<Freshness, string> = {

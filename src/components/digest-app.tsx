@@ -107,10 +107,10 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
   const visibleItems = useMemo(() => digest.items, [digest]);
 
   return (
-    <div className="app-shell">
+    <div className="section-shell">
       <header className="topbar">
         <div>
-          <p className="eyebrow">Дайджест для многодетных · только с компьютера удобно</p>
+          <p className="eyebrow">Новые пространства · парки, дворы, площадки Петербурга</p>
           <h1>Гуляй, СПб</h1>
         </div>
         <div className="topbar-meta">

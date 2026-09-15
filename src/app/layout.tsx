@@ -13,13 +13,17 @@ const sourceSerif = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
-  title: "Гуляй, СПб — утренний дайджест для многодетных",
+  title: "Семейный стол — дайджесты и нацпроекты",
   description:
-    "Свежие новости Петербурга о парках, дворах, площадках и местах, куда можно выйти с детьми.",
+    "В одном месте: новости для многодетных, новые пространства Петербурга и список национальных проектов 2025–2030.",
   icons: { icon: "/favicon.svg" },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html
       lang="ru"
