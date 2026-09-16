@@ -12,10 +12,10 @@ const FETCH_HEADERS = {
 const MAX_AGE_DAYS = 45;
 const FALLBACK_AGE_DAYS = 90;
 
-async function fetchText(url: string) {
+async function fetchText(url: string, fresh = false) {
   const response = await fetch(url, {
     headers: FETCH_HEADERS,
-    next: { revalidate: 1800 },
+    ...(fresh ? { cache: "no-store" as const } : { next: { revalidate: 1800 } }),
     signal: AbortSignal.timeout(10_000),
   });
 
@@ -26,13 +26,13 @@ async function fetchText(url: string) {
   return response.text();
 }
 
-async function loadGoogleArticles() {
+async function loadGoogleArticles(fresh = false) {
   const warnings: string[] = [];
   const articles: RawArticle[] = [];
 
   const results = await Promise.allSettled(
     GOOGLE_SOURCES.map(async (source) => {
-      const xml = await fetchText(googleNewsUrl(source.query));
+      const xml = await fetchText(googleNewsUrl(source.query), fresh);
       return parseRss(xml, "Google Новости");
     }),
   );
@@ -48,13 +48,13 @@ async function loadGoogleArticles() {
   return { articles, warnings };
 }
 
-async function loadRssArticles() {
+async function loadRssArticles(fresh = false) {
   const warnings: string[] = [];
   const articles: RawArticle[] = [];
 
   const results = await Promise.allSettled(
     RSS_FEEDS.map(async (feed) => {
-      const xml = await fetchText(feed.url);
+      const xml = await fetchText(feed.url, fresh);
       return parseRss(xml, feed.name);
     }),
   );
@@ -200,8 +200,11 @@ export function emptyDigest(message: string, now = new Date()): DigestResponse {
   };
 }
 
-export async function fetchDigest(now = new Date()): Promise<DigestResponse> {
-  const [google, rss] = await Promise.all([loadGoogleArticles(), loadRssArticles()]);
+export async function fetchDigest(now = new Date(), fresh = false): Promise<DigestResponse> {
+  const [google, rss] = await Promise.all([
+    loadGoogleArticles(fresh),
+    loadRssArticles(fresh),
+  ]);
   const raw = [...google.articles, ...rss.articles];
 
   const mapped = raw

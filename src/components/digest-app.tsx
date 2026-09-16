@@ -76,7 +76,7 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
     setLoading(true);
     setError("");
     try {
-      const response = await fetch("/api/digest", { cache: "no-store" });
+      const response = await fetch("/api/digest?fresh=1", { cache: "no-store" });
       if (!response.ok) throw new Error("Сервер не ответил");
       const data = (await response.json()) as DigestResponse;
       setDigest(data);
@@ -134,6 +134,7 @@ export function DigestApp({ initialDigest }: { initialDigest: DigestResponse }) 
         regionOn={regionOn}
         onRegionToggle={toggleRegion}
         onRefresh={() => void loadDigest()}
+        refreshing={loading}
       />
 
       <div className="workspace">

@@ -7,7 +7,7 @@ test("catalog has 20 national projects across all goals", () => {
   assert.equal(new Set(NATIONAL_PROJECTS.map((project) => project.id)).size, 20);
   for (const project of NATIONAL_PROJECTS) {
     assert.ok(PROJECT_GROUPS.some((group) => group.id === project.group));
-    assert.ok(project.federalProjects.length > 0);
+    assert.ok(project.federalProjects.every((item) => item.title.length > 0));
     assert.ok(project.highlights.length > 0);
   }
 });

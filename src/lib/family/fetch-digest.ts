@@ -15,10 +15,10 @@ const FETCH_HEADERS = {
 const LOOKBACK_HOURS = 72;
 const MAX_ITEMS = 24;
 
-async function fetchText(url: string) {
+async function fetchText(url: string, fresh = false) {
   const response = await fetch(url, {
     headers: FETCH_HEADERS,
-    next: { revalidate: 1800 },
+    ...(fresh ? { cache: "no-store" as const } : { next: { revalidate: 1800 } }),
     signal: AbortSignal.timeout(10_000),
   });
   if (!response.ok) {
@@ -101,12 +101,12 @@ function toFamilyItem(article: RawArticle, now: Date): FamilyNewsItem | null {
   };
 }
 
-async function loadGoogle() {
+async function loadGoogle(fresh = false) {
   const warnings: string[] = [];
   const articles: RawArticle[] = [];
   const results = await Promise.allSettled(
     FAMILY_GOOGLE_QUERIES.map(async (source) => {
-      const xml = await fetchText(googleNewsUrl(source.query));
+      const xml = await fetchText(googleNewsUrl(source.query), fresh);
       return parseRss(xml, "Google Новости");
     }),
   );
@@ -120,12 +120,12 @@ async function loadGoogle() {
   return { articles, warnings };
 }
 
-async function loadRss() {
+async function loadRss(fresh = false) {
   const warnings: string[] = [];
   const articles: RawArticle[] = [];
   const results = await Promise.allSettled(
     FAMILY_RSS_FEEDS.map(async (feed) => {
-      const xml = await fetchText(feed.url);
+      const xml = await fetchText(feed.url, fresh);
       return parseRss(xml, feed.name);
     }),
   );
@@ -180,9 +180,10 @@ export function emptyFamilyDigest(
 
 export async function fetchFamilyDigest(
   now = new Date(),
+  fresh = false,
 ): Promise<FamilyDigestResponse> {
   const since = new Date(now.getTime() - LOOKBACK_HOURS * 60 * 60 * 1000);
-  const [google, rss] = await Promise.all([loadGoogle(), loadRss()]);
+  const [google, rss] = await Promise.all([loadGoogle(fresh), loadRss(fresh)]);
   const mapped = [...google.articles, ...rss.articles]
     .map((article) => toFamilyItem(article, now))
     .filter((item): item is FamilyNewsItem => Boolean(item))
