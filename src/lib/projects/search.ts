@@ -21,7 +21,7 @@ export function projectMatchesQuery(project: NationalProject, query: string) {
     project.agency,
     project.lead,
     project.curator,
-    ...project.federalProjects,
+    ...project.federalProjects.map((item) => item.title),
     ...project.highlights,
     ...project.indicators,
     ...project.itHooks,
