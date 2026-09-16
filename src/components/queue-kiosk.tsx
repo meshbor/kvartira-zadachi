@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import type { QueueView, Ticket } from "@/lib/queue/types";
 import "./queue-kiosk.css";
@@ -155,11 +154,11 @@ export function QueueKiosk({ initial }: { initial: QueueView }) {
       <div className="kiosk-bezel">
         <header className="kiosk-top">
           <span>Электронная очередь</span>
-          <span>Окно №1 · Алексей П.</span>
+          <span>Окно №1 · Алексей Пуликов</span>
           <span>{clock} МСК</span>
         </header>
 
-        <h1>Записать к Алексею П.</h1>
+        <h1>Приём к Алексею Пуликову</h1>
         <p className="kiosk-sub">
           Терминал выдачи талонов. Очередь обнуляется каждый день в 00:00 по Москве.
         </p>
@@ -280,7 +279,7 @@ export function QueueKiosk({ initial }: { initial: QueueView }) {
                     <p>Электронная очередь · окно №1</p>
                     <strong>{printed.code}</strong>
                     <span>{printed.name || "посетитель"}</span>
-                    <em>Записать к Алексею П.</em>
+                    <em>Приём к Алексею Пуликову</em>
                     <div className="ticket-bar" />
                     <small>Сохраните талон. Очередь сбрасывается в 00:00 МСК.</small>
                   </article>
@@ -348,8 +347,7 @@ export function QueueKiosk({ initial }: { initial: QueueView }) {
         ) : null}
 
         <footer className="kiosk-foot">
-          <span>Режим окна: ~{view.minutesPerVisitor} мин на посетителя</span>
-          <Link href="/window">Окно оператора</Link>
+          <span>Очередь обнуляется каждый день в 00:00 МСК · ~{view.minutesPerVisitor} мин на посетителя</span>
         </footer>
       </div>
     </div>

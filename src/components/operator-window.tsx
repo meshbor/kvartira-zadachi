@@ -43,10 +43,21 @@ export function OperatorWindow({ initial }: { initial: QueueView }) {
       <div className="kiosk-bezel">
         <header className="kiosk-top">
           <span>Окно оператора</span>
-          <span>Алексей П.</span>
-          <Link href="/" style={{ color: "inherit" }}>
-            к терминалу
-          </Link>
+          <span>Алексей Пуликов</span>
+          <span className="kiosk-top-actions">
+            <Link href="/">к терминалу</Link>
+            <button
+              type="button"
+              className="operator-logout"
+              onClick={() => {
+                void fetch("/api/queue/auth", { method: "DELETE" }).then(() => {
+                  window.location.reload();
+                });
+              }}
+            >
+              выйти
+            </button>
+          </span>
         </header>
         <h1>Окно №1</h1>
         <p className="kiosk-sub">Вызов следующего посетителя. Очередь всё равно сама двигается раз в 6 минут.</p>

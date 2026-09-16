@@ -41,7 +41,7 @@
   margin: 0;
   color: #fff8e8;
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(42px, 6vw, 84px);
+  font-size: clamp(34px, 5.4vw, 72px);
   font-weight: 800;
   line-height: 0.95;
   letter-spacing: -0.03em;
@@ -164,6 +164,22 @@
   border-radius: 22px;
   background: #f3f6f1;
   color: #123022;
+}
+
+.kiosk-panel label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.kiosk-panel input {
+  width: 100%;
+  min-height: 56px;
+  padding: 0 16px;
+  border: 1px solid #d7d0bf;
+  border-radius: 14px;
+  font: inherit;
+  font-size: 18px;
+  background: white;
 }
 
 .kiosk-btn {
@@ -367,15 +383,29 @@
 
 .kiosk-foot {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
   margin-top: 18px;
   color: #c3ddcc;
   font-size: 13px;
 }
 
-.kiosk-foot a {
+.kiosk-top-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kiosk-top-actions a,
+.operator-logout {
   color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
 }
 
 @keyframes ticket-out {
