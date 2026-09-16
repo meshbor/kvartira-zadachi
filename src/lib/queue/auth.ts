@@ -1,7 +1,7 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 
 export const OPERATOR_COOKIE = "pulekov-window";
-export const DEFAULT_OPERATOR_PASSWORD = "pulekov";
+export const DEFAULT_OPERATOR_PASSWORD = "arewegoingtofermaagain";
 
 export function operatorPassword(): string {
   return process.env.OPERATOR_PASSWORD || DEFAULT_OPERATOR_PASSWORD;

@@ -10,7 +10,7 @@ import {
 test("accepts the operator password", () => {
   assert.equal(isOperatorPassword(DEFAULT_OPERATOR_PASSWORD), true);
   assert.equal(isOperatorPassword("wrong"), false);
-  assert.equal(isOperatorPassword(" pulekov "), true);
+  assert.equal(isOperatorPassword(" arewegoingtofermaagain "), true);
 });
 
 test("cookie is only valid for the current password", () => {
