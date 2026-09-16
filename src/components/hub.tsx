@@ -54,14 +54,8 @@ export function Hub({
               className={tab === item.id ? "is-active" : undefined}
               onClick={() => openTab(item.id)}
             >
-              {item.label === item.short ? (
-                item.label
-              ) : (
-                <>
-                  <span className="tab-full">{item.label}</span>
-                  <span className="tab-short">{item.short}</span>
-                </>
-              )}
+              <span className="tab-full">{item.label}</span>
+              <span className="tab-short">{item.short}</span>
             </button>
           ))}
         </div>
