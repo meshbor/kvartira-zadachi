@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from "react";
 
+/** Keep in sync with `@media (max-width: 1100px)` in globals.css */
 export const PHONE_MEDIA = "(max-width: 1100px)";
 
 export function usePhoneLayout() {
