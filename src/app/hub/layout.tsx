@@ -1,8 +1,4 @@
-import type { Metadata, Viewport } from "next";
-
-export const viewport: Viewport = {
-  themeColor: "#f4efe4",
-};
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "digest — семья и прогулки",
@@ -10,5 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default function HubLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return <>{children}</>;
 }
