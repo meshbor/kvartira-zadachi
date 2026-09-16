@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Nunito, Source_Serif_4 } from "next/font/google";
+import { JetBrains_Mono, Nunito, Source_Serif_4, Unbounded } from "next/font/google";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -12,18 +12,29 @@ const sourceSerif = Source_Serif_4({
   subsets: ["cyrillic", "latin"],
 });
 
+const unbounded = Unbounded({
+  variable: "--font-display",
+  subsets: ["cyrillic", "latin"],
+  weight: ["700", "800"],
+});
+
+const jetbrains = JetBrains_Mono({
+  variable: "--font-ticket",
+  subsets: ["cyrillic", "latin"],
+  weight: ["700"],
+});
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
   viewportFit: "cover",
-  themeColor: "#f4efe4",
+  themeColor: "#0c2f1e",
 };
 
 export const metadata: Metadata = {
-  title: "digest — семья, прогулки, нацпроекты",
-  description:
-    "Новости для многодетных и прогулок по Петербургу и Ленобласти, плюс список национальных проектов 2025–2030.",
+  title: "Записать к Алексею П.",
+  description: "Электронный терминал записи к Алексею П. Талоны как в Сбере, очередь обнуляется каждый день.",
   icons: { icon: "/favicon.svg" },
 };
 
@@ -35,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="ru"
-      className={`${nunito.variable} ${sourceSerif.variable} h-full antialiased`}
+      className={`${nunito.variable} ${sourceSerif.variable} ${unbounded.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="min-h-full">{children}</body>
     </html>
