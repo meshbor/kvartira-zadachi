@@ -3,14 +3,12 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { DigestApp } from "@/components/digest-app";
 import { FamilyDigestApp } from "@/components/family-digest-app";
-import { NationalProjectsApp } from "@/components/national-projects";
 import type { FamilyDigestResponse } from "@/lib/family/types";
 import type { DigestResponse } from "@/lib/news/types";
 
 const TABS = [
   { id: "family", label: "Многодетные", short: "Семья" },
   { id: "spaces", label: "Новые пространства", short: "Прогулки" },
-  { id: "projects", label: "Нацпроекты", short: "Нацпроекты" },
 ] as const;
 
 export type HubTab = (typeof TABS)[number]["id"];
@@ -72,7 +70,6 @@ export function Hub({
       <div role="tabpanel">
         {tab === "family" ? <FamilyDigestApp initialDigest={familyDigest} /> : null}
         {tab === "spaces" ? <DigestApp initialDigest={spacesDigest} /> : null}
-        {tab === "projects" ? <NationalProjectsApp /> : null}
       </div>
     </div>
   );

@@ -21,9 +21,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "digest — семья, прогулки, нацпроекты",
+  title: "digest — семья и прогулки",
   description:
-    "Новости для многодетных и прогулок по Петербургу и Ленобласти, плюс список национальных проектов 2025–2030.",
+    "Новости для многодетных и прогулок по Петербургу и Ленобласти.",
   icons: { icon: "/favicon.svg" },
 };
 
