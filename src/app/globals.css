@@ -125,13 +125,23 @@ body {
 
 .topbar {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
   padding: 6px 8px;
   background: var(--card);
   border-radius: 14px;
   box-shadow: 0 8px 20px rgba(47, 36, 16, 0.05);
+}
+
+.topbar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar-stack {
+  flex-direction: column;
 }
 
 .eyebrow {
@@ -195,6 +205,28 @@ body {
 .icon-button {
   width: 32px;
   padding: 0;
+}
+
+.load-news {
+  border: 1px solid var(--line);
+  cursor: pointer;
+  font: inherit;
+  width: 100%;
+  min-height: 36px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: #f3f7f2;
+  color: var(--leaf-deep);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.load-news:disabled {
+  opacity: 0.65;
+}
+
+.is-parked {
+  display: none !important;
 }
 
 .feed-status {
@@ -696,6 +728,11 @@ body {
     border-radius: 16px;
   }
 
+  .topbar.topbar-stack {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .topbar h1 {
     display: none;
   }
@@ -716,6 +753,10 @@ body {
     min-height: calc(100vh - 230px);
     padding: 16px;
     border-radius: 24px;
+  }
+
+  .workspace-projects {
+    grid-template-columns: minmax(0, 1fr) 320px;
   }
 
   .rail,

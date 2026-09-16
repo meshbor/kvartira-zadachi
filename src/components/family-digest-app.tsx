@@ -72,7 +72,7 @@ export function FamilyDigestApp({
     setLoading(true);
     setError("");
     try {
-      const response = await fetch("/api/family-digest", { cache: "no-store" });
+      const response = await fetch("/api/family-digest?fresh=1", { cache: "no-store" });
       if (!response.ok) throw new Error("Сервер не ответил");
       const data = (await response.json()) as FamilyDigestResponse;
       setDigest(data);
@@ -138,6 +138,7 @@ export function FamilyDigestApp({
         regionOn={regionOn}
         onRegionToggle={toggleRegion}
         onRefresh={() => void loadDigest()}
+        refreshing={loading}
       />
 
       <div className="workspace">

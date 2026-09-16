@@ -16,13 +16,12 @@ import { filterProjects } from "@/lib/projects/search";
 
 export function NationalProjectsApp() {
   const [query, setQuery] = useState("");
-  const [group, setGroup] = useState<ProjectGroupId | "all">("all");
   const [selectedId, setSelectedId] = useState(NATIONAL_PROJECTS[0].id);
   const [sheetOpen, setSheetOpen] = useState(false);
 
   const filtered = useMemo(
-    () => filterProjects(query, group),
-    [group, query],
+    () => filterProjects(query, "all"),
+    [query],
   );
 
   const selected =
@@ -32,39 +31,13 @@ export function NationalProjectsApp() {
     <div className="section-shell">
       <DigestToolbar description="Нацпроекты 2025–2030, 20 штук" />
 
-      <div className="workspace">
-        <aside className="rail">
-          <section>
-            <div className="chip-list scroll-chips">
-              <button
-                type="button"
-                className={group === "all" ? "is-active" : undefined}
-                onClick={() => setGroup("all")}
-              >
-                Все
-                <em>{NATIONAL_PROJECTS.length}</em>
-              </button>
-              {PROJECT_GROUPS.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={group === item.id ? "is-active" : undefined}
-                  onClick={() => setGroup(item.id)}
-                >
-                  {item.title}
-                  <em>
-                    {NATIONAL_PROJECTS.filter((project) => project.group === item.id).length}
-                  </em>
-                </button>
-              ))}
-            </div>
-          </section>
-        </aside>
-
+      <div className="workspace workspace-projects">
         <main className="chat-panel">
+          {/* TODO(search): вернуть поиск по нацпроектам, когда появится разбор федеральных проектов и компаний. */}
           <form
-            className="composer"
+            className="composer is-parked"
             onSubmit={(event) => event.preventDefault()}
+            hidden
           >
             <input
               value={query}
