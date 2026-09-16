@@ -53,7 +53,7 @@ export function OperatorWindow({ initial }: { initial: QueueView }) {
         <div className="kiosk-grid">
           <section className="led-board">
             <p className="led-label">Приглашён</p>
-            <p className="led-code">{view.nowServing?.code ?? "—— —"}</p>
+            <p className="led-code">{view.nowServing?.code ?? "---"}</p>
             <p className="led-name">{view.nowServing?.name || "нет посетителя у окна"}</p>
             <div className="led-strip">
               {view.waiting.map((ticket) => (

@@ -167,7 +167,7 @@ export function QueueKiosk({ initial }: { initial: QueueView }) {
         <div className="kiosk-grid">
           <section className="led-board" aria-live="polite">
             <p className="led-label">Сейчас у окна</p>
-            <p className="led-code">{view.nowServing?.code ?? "—— —"}</p>
+            <p className="led-code">{view.nowServing?.code ?? "---"}</p>
             <p className="led-name">
               {view.nowServing
                 ? view.nowServing.name || "посетитель"
