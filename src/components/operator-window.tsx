@@ -60,7 +60,7 @@ export function OperatorWindow({ initial }: { initial: QueueView }) {
           </span>
         </header>
         <h1>Окно №1</h1>
-        <p className="kiosk-sub">Вызов следующего посетителя. Очередь всё равно сама двигается раз в 6 минут.</p>
+        <p className="kiosk-sub">Вызов следующего посетителя. Очередь двигается только этой кнопкой.</p>
         <div className="kiosk-grid">
           <section className="led-board">
             <p className="led-label">Приглашён</p>
