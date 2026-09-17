@@ -1,6 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { autoAdvance, callNext, emptyState, ensureDay, issueTicket, lookupTicket, toView } from "./logic";
+import { callNext, emptyState, ensureDay, issueTicket, lookupTicket, toView } from "./logic";
 import { moscowDay, nextMoscowMidnight, secondsUntilReset } from "./time";
 import type { QueueState, QueueView, Ticket, TicketLookup } from "./types";
 
@@ -66,13 +66,13 @@ async function loadState(now: Date): Promise<QueueState> {
   if (hasRedis()) {
     const raw = await redisCommand(["GET", STATE_KEY]);
     if (typeof raw === "string" && raw) {
-      return autoAdvance(ensureDay(JSON.parse(raw) as QueueState, day), now);
+      return ensureDay(JSON.parse(raw) as QueueState, day);
     }
     return emptyState(day);
   }
   const cached = slot().memory ?? (await readFileState());
   if (!cached) return emptyState(day);
-  return autoAdvance(ensureDay(cached, day), now);
+  return ensureDay(cached, day);
 }
 
 async function saveState(state: QueueState, now: Date): Promise<void> {
@@ -115,7 +115,7 @@ async function mutate<T>(now: Date, fn: (state: QueueState) => T | Promise<T>): 
 
 export async function getQueueView(now = new Date()): Promise<QueueView> {
   return mutate(now, async (state) => {
-    const next = autoAdvance(ensureDay(state, moscowDay(now)), now);
+    const next = ensureDay(state, moscowDay(now));
     await saveState(next, now);
     return toView(next, now);
   });
@@ -131,7 +131,7 @@ export async function takeTicket(name: string, now = new Date()): Promise<{ view
 
 export async function findTicket(code: string, now = new Date()): Promise<{ view: QueueView; lookup: TicketLookup | null }> {
   return mutate(now, async (state) => {
-    const next = autoAdvance(ensureDay(state, moscowDay(now)), now);
+    const next = ensureDay(state, moscowDay(now));
     await saveState(next, now);
     return { view: toView(next, now), lookup: lookupTicket(next, code) };
   });

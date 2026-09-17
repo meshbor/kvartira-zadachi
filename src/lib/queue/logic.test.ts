@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
-  autoAdvance,
   callNext,
   emptyState,
   formatTicketCode,
@@ -20,7 +19,7 @@ test("formats Sber-style ticket codes", () => {
   assert.equal(parseTicketCode("nope"), null);
 });
 
-test("issues the first ticket and invites it to the window", () => {
+test("issues tickets as waiting until the operator calls next", () => {
   const now = new Date("2026-09-16T10:00:00+03:00");
   const { state, ticket } = issueTicket(emptyState("2026-09-16"), {
     day: "2026-09-16",
@@ -28,32 +27,35 @@ test("issues the first ticket and invites it to the window", () => {
     now,
   });
   assert.equal(ticket.code, "АП-001");
-  assert.equal(ticket.status, "serving");
-  assert.equal(state.tickets[0]?.status, "serving");
+  assert.equal(ticket.status, "waiting");
+  assert.equal(state.tickets[0]?.status, "waiting");
   const second = issueTicket(state, { day: "2026-09-16", name: "Олег", now });
   assert.equal(second.ticket.code, "АП-002");
   assert.equal(second.ticket.status, "waiting");
   const lookup = lookupTicket(second.state, "АП-002");
   assert.equal(lookup?.peopleAhead, 1);
-  assert.equal(lookup?.etaMinutes, 6);
 });
 
-test("auto-advances the window after six minutes", () => {
+test("time passing does not move the window", () => {
   const start = new Date("2026-09-16T10:00:00+03:00");
   let { state } = issueTicket(emptyState("2026-09-16"), {
     day: "2026-09-16",
     name: "А",
     now: start,
   });
+  state = callNext(state, "2026-09-16", start);
   state = issueTicket(state, {
     day: "2026-09-16",
     name: "Б",
     now: start,
   }).state;
   const later = new Date(start.getTime() + 6 * 60 * 1000);
-  const advanced = autoAdvance(state, later);
-  assert.equal(advanced.tickets[0]?.status, "done");
-  assert.equal(advanced.tickets[1]?.status, "serving");
+  const lookup = lookupTicket(state, "АП-001");
+  assert.equal(lookup?.ticket.status, "serving");
+  assert.equal(state.tickets[1]?.status, "waiting");
+  const still = lookupTicket(state, "АП-002");
+  assert.equal(still?.ticket.status, "waiting");
+  assert.ok(later > start);
 });
 
 test("resets on a new Moscow day", () => {
@@ -81,6 +83,9 @@ test("operator can skip to the next visitor", () => {
     now,
   });
   state = issueTicket(state, { day: "2026-09-16", name: "Б", now }).state;
+  state = callNext(state, "2026-09-16", now);
+  assert.equal(state.tickets[0]?.status, "serving");
+  assert.equal(state.tickets[1]?.status, "waiting");
   state = callNext(state, "2026-09-16", now);
   assert.equal(state.tickets[0]?.status, "done");
   assert.equal(state.tickets[1]?.status, "serving");

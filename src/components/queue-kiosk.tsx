@@ -53,18 +53,33 @@ function beep() {
   }
 }
 
-export function QueueKiosk({ initial }: { initial: QueueView }) {
+export function QueueKiosk({
+  initial,
+  claimed = null,
+}: {
+  initial: QueueView;
+  claimed?: Ticket | null;
+}) {
   const [view, setView] = useState(initial);
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [overlay, setOverlay] = useState<"none" | "signup" | "ticket" | "board">("none");
   const [printed, setPrinted] = useState<Ticket | null>(null);
-  const [mine, setMine] = useState<StoredTicket | null>(null);
+  const [mine, setMine] = useState<StoredTicket | null>(
+    claimed ? { day: initial.day, code: claimed.code, name: claimed.name } : null,
+  );
   const storedRaw = useSyncExternalStore(subscribeStorage, snapshotStorage, () => null);
   const storedTicket = useMemo(() => parseStored(storedRaw, view.day), [storedRaw, view.day]);
   const activeTicket = mine?.day === view.day ? mine : storedTicket;
   const [clock, setClock] = useState("");
+
+  useEffect(() => {
+    if (!claimed) return;
+    const stored = { day: initial.day, code: claimed.code, name: claimed.name };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+    setMine(stored);
+  }, [claimed, initial.day]);
 
   useEffect(() => {
     const tick = () =>
@@ -112,27 +127,52 @@ export function QueueKiosk({ initial }: { initial: QueueView }) {
     return { ticket, peopleAhead };
   }, [activeTicket, view]);
 
+  function rememberTicket(day: string, ticket: Ticket) {
+    const stored = { day, code: ticket.code, name: ticket.name };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+    setMine(stored);
+    setPrinted(ticket);
+    setOverlay("ticket");
+    beep();
+  }
+
   async function issueTicket(visitorName: string) {
     setBusy(true);
     setError("");
     try {
-      const payload = await readJson<{ view: QueueView; ticket: Ticket }>("/api/queue", {
+      const response = await fetch("/api/queue", {
         method: "POST",
+        cache: "no-store",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: visitorName }),
       });
-      setView(payload.view);
-      setPrinted(payload.ticket);
-      const stored = { day: payload.view.day, code: payload.ticket.code, name: payload.ticket.name };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
-      setMine(stored);
-      setOverlay("ticket");
-      beep();
+      const payload = (await response.json()) as {
+        view?: QueueView;
+        ticket?: Ticket;
+        error?: string;
+      };
+      if (payload.view) setView(payload.view);
+      if (payload.ticket) {
+        rememberTicket(payload.view?.day ?? view.day, payload.ticket);
+        if (!response.ok) setError(payload.error || "Талон уже выдан");
+        return;
+      }
+      throw new Error(payload.error || "Ошибка терминала");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Терминал занят");
     } finally {
       setBusy(false);
     }
+  }
+
+  function openSignup() {
+    setError("");
+    if (myLookup?.ticket) {
+      setPrinted(myLookup.ticket);
+      setOverlay("ticket");
+      return;
+    }
+    setOverlay("signup");
   }
 
   async function openBoard() {
@@ -160,7 +200,7 @@ export function QueueKiosk({ initial }: { initial: QueueView }) {
 
         <h1>Приём к Алексею Пуликову</h1>
         <p className="kiosk-sub">
-          Терминал выдачи талонов. Очередь обнуляется каждый день в 00:00 по Москве.
+          Терминал выдачи талонов. С одного устройства — один талон в день. Очередь двигает оператор.
         </p>
 
         <div className="kiosk-grid">
@@ -207,12 +247,9 @@ export function QueueKiosk({ initial }: { initial: QueueView }) {
               type="button"
               className="kiosk-btn kiosk-btn-main"
               disabled={busy}
-              onClick={() => {
-                setError("");
-                setOverlay("signup");
-              }}
+              onClick={() => openSignup()}
             >
-              Записаться
+              {activeTicket ? "Мой талон" : "Записаться"}
             </button>
             <button
               type="button"
@@ -250,6 +287,7 @@ export function QueueKiosk({ initial }: { initial: QueueView }) {
                 >
                   <p className="modal-kicker">Новый талон</p>
                   <h2>Как к вам обращаться?</h2>
+                  <p className="board-you">Повторно талон с этого телефона сегодня не выдаётся.</p>
                   <input
                     value={name}
                     onChange={(event) => setName(event.target.value)}
@@ -303,7 +341,7 @@ export function QueueKiosk({ initial }: { initial: QueueView }) {
                         ? `Талон ${myLookup.ticket.code}: проходите к окну.`
                         : myLookup.ticket.status === "done"
                           ? `Талон ${myLookup.ticket.code} уже вызван.`
-                          : `Талон ${myLookup.ticket.code}: перед вами ${myLookup.peopleAhead}, примерно ${myLookup.peopleAhead * view.minutesPerVisitor} мин.`}
+                          : `Талон ${myLookup.ticket.code}: перед вами ${myLookup.peopleAhead}.`}
                     </p>
                   ) : (
                     <p className="board-you">Сегодня выдано {view.issuedCount} талонов.</p>
@@ -347,7 +385,7 @@ export function QueueKiosk({ initial }: { initial: QueueView }) {
         ) : null}
 
         <footer className="kiosk-foot">
-          <span>Очередь обнуляется каждый день в 00:00 МСК · ~{view.minutesPerVisitor} мин на посетителя</span>
+          <span>Очередь обнуляется каждый день в 00:00 МСК · один талон с устройства в сутки</span>
         </footer>
       </div>
     </div>

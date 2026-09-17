@@ -1,7 +1,6 @@
 import type { QueueState, QueueView, Ticket, TicketLookup } from "./types";
 import { nextMoscowMidnight } from "./time";
 
-export const MINUTES_PER_VISITOR = 6;
 export const MAX_TICKETS_PER_DAY = 999;
 export const TICKET_PREFIX = "АП";
 
@@ -55,28 +54,11 @@ function inviteNext(state: QueueState, now: Date): QueueState {
   );
 }
 
-export function autoAdvance(state: QueueState, now: Date): QueueState {
-  let current = state;
-  const limitMs = MINUTES_PER_VISITOR * 60 * 1000;
-  for (let step = 0; step < MAX_TICKETS_PER_DAY; step += 1) {
-    const serving = current.tickets.find((ticket) => ticket.status === "serving");
-    if (serving) {
-      const calledAt = serving.calledAt ? new Date(serving.calledAt).getTime() : 0;
-      if (now.getTime() - calledAt < limitMs) break;
-      current = completeServing(current, now);
-      continue;
-    }
-    if (!current.tickets.some((ticket) => ticket.status === "waiting")) break;
-    current = inviteNext(current, now);
-  }
-  return current;
-}
-
 export function issueTicket(
   state: QueueState,
   input: { day: string; name: string; now: Date },
 ): { state: QueueState; ticket: Ticket } {
-  let next = autoAdvance(ensureDay(state, input.day), input.now);
+  const next = ensureDay(state, input.day);
   if (next.nextNumber > MAX_TICKETS_PER_DAY) {
     throw new Error("На сегодня талоны закончились. Приходите после 00:00 МСК.");
   }
@@ -91,18 +73,18 @@ export function issueTicket(
     doneAt: null,
   };
 
-  next = {
-    ...next,
-    nextNumber: next.nextNumber + 1,
-    tickets: [...next.tickets, ticket],
+  return {
+    state: {
+      ...next,
+      nextNumber: next.nextNumber + 1,
+      tickets: [...next.tickets, ticket],
+    },
+    ticket,
   };
-  next = autoAdvance(next, input.now);
-  const saved = next.tickets.find((item) => item.code === ticket.code) ?? ticket;
-  return { state: next, ticket: saved };
 }
 
 export function callNext(state: QueueState, day: string, now: Date): QueueState {
-  let next = autoAdvance(ensureDay(state, day), now);
+  let next = ensureDay(state, day);
   if (next.tickets.some((ticket) => ticket.status === "serving")) {
     next = completeServing(next, now);
   }
@@ -124,7 +106,6 @@ export function toView(state: QueueState, now = new Date()): QueueView {
     doneCount: done.length,
     issuedCount: state.tickets.length,
     resetsAt: nextMoscowMidnight(now).toISOString(),
-    minutesPerVisitor: MINUTES_PER_VISITOR,
   };
 }
 
@@ -143,6 +124,5 @@ export function lookupTicket(state: QueueState, code: string): TicketLookup | nu
     ticket,
     peopleAhead,
     nowServing: state.tickets.find((item) => item.status === "serving") ?? null,
-    etaMinutes: ticket.status === "waiting" ? peopleAhead * MINUTES_PER_VISITOR : 0,
   };
 }

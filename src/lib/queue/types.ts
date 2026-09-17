@@ -26,12 +26,10 @@ export type QueueView = {
   doneCount: number;
   issuedCount: number;
   resetsAt: string;
-  minutesPerVisitor: number;
 };
 
 export type TicketLookup = {
   ticket: Ticket;
   peopleAhead: number;
   nowServing: Ticket | null;
-  etaMinutes: number;
 };
